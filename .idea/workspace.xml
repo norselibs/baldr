@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Inintial support for simple and recursive stubbing">
+    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/InvocationMode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Invoke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/VerificationSetup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +231,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680234989079</updated>
       <workItem from="1680234990317" duration="5736000" />
-      <workItem from="1680241832072" duration="8225000" />
+      <workItem from="1680241832072" duration="9879000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -242,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680249461690</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface">
+      <created>1680255670149</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680255670149</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +263,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="Inintial support for simple and recursive stubbing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Inintial support for simple and recursive stubbing" />
+    <MESSAGE value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

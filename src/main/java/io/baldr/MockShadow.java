@@ -1,25 +1,23 @@
 package io.baldr;
 
-import io.ran.Clazz;
-
-import java.util.Collections;
-import java.util.Optional;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static io.baldr.Baldr.mock;
 
 @SuppressWarnings("rawtypes")
 public class MockShadow {
     ConcurrentLinkedQueue<MockInvocation<?>> stubs = new ConcurrentLinkedQueue<>();
     ConcurrentLinkedQueue<MockInvocation<?>> invocations = new ConcurrentLinkedQueue<>();
-    private final AtomicBoolean verificationMode = new AtomicBoolean(false);
-    private final AtomicBoolean stubbingMode = new AtomicBoolean(false);
+
+    private InvocationMode invocationMode;
     private MockInvocation<?> currentInvocation;
     private final AtomicInteger invocationOrder = new AtomicInteger(0);
     private MockInvocation<?> previousMatch;
     private Object previousRecursiveStub = null;
+
+    public MockShadow() {
+        invocationMode = new Invoke(this);
+    }
 
     public static MockShadow get() {
         return new MockShadow();
@@ -27,62 +25,22 @@ public class MockShadow {
 
     public <T> MockInvocation<T> buildInvocation(T on,String methodName) {
         MockInvocation<T> invocation = new MockInvocation<>(this, on, methodName);
-        if (!verificationMode.get() && !stubbingMode.get()) {
-            invocation.setOrder(invocationOrder.incrementAndGet());
-            invocations.add(invocation);
-        }
+        invocationMode.build(invocation);
         currentInvocation =  invocation;
 
         return invocation;
     }
 
     public void enterVerificationMode() {
-        verificationMode.set(true);
+        invocationMode = new VerificationSetup(this);
     }
 
     public void exitVerificationMode() {
-        verificationMode.set(false);
+        invocationMode = new Invoke(this);
     }
 
     public Object finish() {
-        if (verificationMode.get()) {
-            Optional<MockInvocation<?>> match = currentInvocation.matchesAny(invocations);
-            if(match.isEmpty()) {
-                throw new MockVerificationException("No matching invocations of "+ currentInvocation.toString()+" invoked on mock");
-            } else {
-                previousMatch = match.get();
-            }
-
-            currentInvocation = null;
-            return null;
-        } else if (stubbingMode.get()) {
-            stubs.add(currentInvocation);
-            Clazz<?> returnType = Clazz.of(currentInvocation.getMethod().getReturnType());
-            if (returnType.isPrimitive() || returnType.isBoxedPrimitive()) {
-                return returnType.getDefaultValue();
-            } else if (returnType.is(Clazz.of(String.class), Collections.emptySet())) {
-                return null;
-            } else {
-                previousRecursiveStub = mock(returnType.clazz);
-                exitStubbingMode();
-                ((MockedObject<?>)previousRecursiveStub).$getInvocations().enterStubbingMode();
-
-                currentInvocation.addReturnValue(previousRecursiveStub);
-                return previousRecursiveStub;
-            }
-        } else {
-            Optional<MockInvocation<?>> stub = stubs.stream().filter(s -> s.matches((MockInvocation)currentInvocation)).findFirst();
-            if (stub.isPresent()) {
-                return stub.get().popReturnValue();
-            } else {
-                Clazz<?> returnType = Clazz.of(currentInvocation.getMethod().getReturnType());
-                if (returnType.isPrimitive() || returnType.isBoxedPrimitive()) {
-                    return returnType.getDefaultValue();
-                } else {
-                    return mock(returnType.clazz);
-                }
-            }
-        }
+        return invocationMode.finish();
     }
 
     public MockInvocation<?> getPreviousMatch() {
@@ -90,18 +48,50 @@ public class MockShadow {
     }
 
     public void enterStubbingMode() {
-        stubbingMode.set(true);
+        invocationMode = new StubSetup(this);
     }
 
     public void exitStubbingMode() {
-        stubbingMode.set(false);
+        invocationMode = new Invoke(this);
     }
 
     public MockInvocation<?> getCurrent() {
         return currentInvocation;
     }
 
-    public Object getPreviousRecursiveStub() {
-        return previousRecursiveStub;
+    public MockedObject<?> getPreviousRecursiveStub() {
+        return (MockedObject<?>) previousRecursiveStub;
+    }
+
+    public int incrementOrder() {
+        return invocationOrder.incrementAndGet();
+    }
+
+    public <T> void addInvocation(MockInvocation<T> invocation) {
+        invocations.add(invocation);
+    }
+
+    public Queue<MockInvocation<?>> getInvocations() {
+        return invocations;
+    }
+
+    public void setPreviousMatch(MockInvocation<?> mockInvocation) {
+        previousMatch = mockInvocation;
+    }
+
+    public void resetCurrent() {
+        currentInvocation = null;
+    }
+
+    public void addStub(MockInvocation<?> current) {
+        stubs.add(current);
+    }
+
+    public void setPreviousRecursiveStub(Object stub) {
+        previousRecursiveStub = stub;
+    }
+
+    public ConcurrentLinkedQueue<MockInvocation<?>> getStubs() {
+        return stubs;
     }
 }
