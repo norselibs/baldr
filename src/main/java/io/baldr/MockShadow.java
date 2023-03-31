@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static io.baldr.Baldr.mock;
 
 @SuppressWarnings("rawtypes")
-public class MockInvocations {
+public class MockShadow {
     ConcurrentLinkedQueue<MockInvocation<?>> stubs = new ConcurrentLinkedQueue<>();
     ConcurrentLinkedQueue<MockInvocation<?>> invocations = new ConcurrentLinkedQueue<>();
     private final AtomicBoolean verificationMode = new AtomicBoolean(false);
@@ -21,8 +21,8 @@ public class MockInvocations {
     private MockInvocation<?> previousMatch;
     private Object previousRecursiveStub = null;
 
-    public static MockInvocations get() {
-        return new MockInvocations();
+    public static MockShadow get() {
+        return new MockShadow();
     }
 
     public <T> MockInvocation<T> buildInvocation(T on,String methodName) {

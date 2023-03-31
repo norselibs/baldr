@@ -19,11 +19,11 @@ class MockVerificationImpl<T> implements MockVerification<T> {
         if (previousMatch != null) {
             previousOrder = previousMatch.getOrder();
         }
-        MockInvocations mockInvocations = ((MockedObject<?>) on).$getInvocations();
-        mockInvocations.enterVerificationMode();
+        MockShadow mockShadow = ((MockedObject<?>) on).$getInvocations();
+        mockShadow.enterVerificationMode();
         consumer.accept(on);
-        mockInvocations.exitVerificationMode();
-        MockInvocation<?> currentMatch = mockInvocations.getPreviousMatch();
+        mockShadow.exitVerificationMode();
+        MockInvocation<?> currentMatch = mockShadow.getPreviousMatch();
         if(previousOrder > -1 && previousOrder > currentMatch.getOrder()) {
             throw new MockVerificationException(previousMatch.toString()+" was expected to be called before "+ currentMatch);
         }

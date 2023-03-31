@@ -35,14 +35,14 @@ public class MockWriter extends AutoMapperClassWriter {
 						Stream.of(Clazz.ofClazzes(MockedObject.class, wrappeeClass).getInternalName())
 						, this.wrapperClazz.isInterface() ? Stream.of(this.wrapperClazz.getInternalName()) : Stream.empty()).toArray(String[]::new)		);
 
-		field(Access.Private, "_invocations", Clazz.raw(MockInvocations.class), null);
+		field(Access.Private, "_invocations", Clazz.raw(MockShadow.class), null);
 
 		MethodWriter mw = method(Access.Public, new MethodSignature(wrapperGenerated, "<init>", Clazz.getVoid()));
 		mw.load(0);
 		mw.invoke(new MethodSignature(wrappeeClass.clazz.getConstructor()));
 		mw.load(0);
-		mw.invoke(MockInvocations.class.getMethod("get"));
-		mw.putfield(wrapperGenerated, "_invocations", Clazz.raw(MockInvocations.class));
+		mw.invoke(MockShadow.class.getMethod("get"));
+		mw.putfield(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
 		mw.returnNothing();
 		mw.end();
 		build();
@@ -60,7 +60,7 @@ public class MockWriter extends AutoMapperClassWriter {
 			if (!wrapperClazz.declaresMethod(cm)) {
 				MethodWriter mw = method(Access.Public, cm.getSignature());
 				mw.load(0);
-				mw.getField(wrapperGenerated, "_invocations", Clazz.raw(MockInvocations.class));
+				mw.getField(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
 				mw.returnObject();
 				mw.end();
 			} else {
@@ -78,11 +78,11 @@ public class MockWriter extends AutoMapperClassWriter {
 				if (!Clazz.of(Object.class).declaresMethod(cm)) {
 					MethodWriter mw = method(cm.getAccess(), cm.getSignature());
 					mw.load(0);
-					mw.getField(wrapperGenerated, "_invocations", Clazz.raw(MockInvocations.class));
+					mw.getField(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
 					mw.load(0);
 					mw.cast(wrappeeClass);
 					mw.push(cm.getName());
-					mw.invoke(MockInvocations.class.getMethod("buildInvocation", Object.class, String.class));
+					mw.invoke(MockShadow.class.getMethod("buildInvocation", Object.class, String.class));
 					int i = 0;
 					for (ClazzMethodParameter p : cm.parameters()) {
 						mw.dup();

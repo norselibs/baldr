@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Inintial support for simple and recursive stubbing">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +226,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680234989079</updated>
       <workItem from="1680234990317" duration="5736000" />
-      <workItem from="1680241832072" duration="7610000" />
+      <workItem from="1680241832072" duration="8225000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -246,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680242577257</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Inintial support for simple and recursive stubbing">
+      <created>1680249461690</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1680249461690</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -13,15 +13,15 @@ import static org.hamcrest.Matchers.equalTo;
 
 @SuppressWarnings("rawtypes")
 public class MockInvocation<T> {
-    private final MockInvocations mockInvocations;
+    private final MockShadow mockShadow;
     private final T on;
     private final String methodName;
     private final List<MockInvocationParameter> parameters = new ArrayList<>();
     private int order;
     private final ConcurrentLinkedQueue<Object> returnValues = new ConcurrentLinkedQueue<>();
 
-    public MockInvocation(MockInvocations mockInvocations, T on, String methodName) {
-        this.mockInvocations = mockInvocations;
+    public MockInvocation(MockShadow mockShadow, T on, String methodName) {
+        this.mockShadow = mockShadow;
         this.on = on;
         this.methodName = methodName;
     }
@@ -32,7 +32,7 @@ public class MockInvocation<T> {
     }
 
     public Object end() {
-        return mockInvocations.finish();
+        return mockShadow.finish();
     }
 
     public Optional<MockInvocation<?>> matchesAny(Queue<MockInvocation<?>> invocations) {
