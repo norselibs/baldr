@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'io.baldr'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    implementation 'io.ran:ran-core:0.1-SNAPSHOT'
+    implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
+    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'
+    implementation 'cglib:cglib:3.3.0'
+    implementation 'org.hamcrest:hamcrest:2.2'
+}

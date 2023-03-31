@@ -1,0 +1,53 @@
+package io.baldr;
+
+import io.ran.AutoMapper;
+import io.ran.AutoMapperClassLoader;
+import io.ran.AutoWrapperWriter;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.util.CheckClassAdapter;
+
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
+public class Baldr {
+    private static Map<String, Class> mocks = new HashMap<>();
+
+    private static AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
+
+    @SuppressWarnings({"rawtype","unchecked"})
+    public static <T> T mock(Class<T> tClass) {
+        try {
+            return (T)mocks.computeIfAbsent(tClass.getName(), c -> {
+
+                try {
+                    Path path = Paths.get("/tmp/" + tClass.getSimpleName() + "$Ran$Wrapper.class");
+
+                    MockWriter visitor = new MockWriter(tClass.getSimpleName(), tClass);
+                    byte[] bytes = visitor.toByteArray();
+                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
+                        outputStream.write(bytes);
+                    }
+
+                    CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
+                    return classLoader.define(visitor.getName(), bytes);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public static <T> MockVerification assertCalled(T t, Consumer<T> consumer) {
+        return new MockVerificationImpl<T>(t, consumer);
+    }
+}
