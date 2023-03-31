@@ -4,30 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockedObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" afterDir="false" />
+    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Inintial support for simple and recursive stubbing">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +126,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.simpleVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrTest.invalidInOrderVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -150,7 +139,76 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.simpleVerification&quot;" />
+            <option value="&quot;io.baldr.BaldrTest.invalidInOrderVerification&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BaldrTest.recursiveStubbing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrTest.recursiveStubbing&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BaldrTest.simpleParameterMatching" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrTest.simpleParameterMatching&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BaldrTest.simpleStubbing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrTest.simpleStubbing&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -163,7 +221,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.BaldrTest" />
-        <item itemvalue="Gradle.BaldrTest.simpleVerification" />
+        <item itemvalue="Gradle.BaldrTest.simpleStubbing" />
+        <item itemvalue="Gradle.BaldrTest.recursiveStubbing" />
+        <item itemvalue="Gradle.BaldrTest.simpleParameterMatching" />
+        <item itemvalue="Gradle.BaldrTest.invalidInOrderVerification" />
       </list>
     </recent_temporary>
   </component>
@@ -176,12 +237,25 @@
       <option name="presentableId" value="Default" />
       <updated>1680234989079</updated>
       <workItem from="1680234990317" duration="5736000" />
-      <workItem from="1680241832072" duration="665000" />
+      <workItem from="1680241832072" duration="7610000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <created>1680242577257</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1680242577257</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <MESSAGE value="Inintial support for simple and recursive stubbing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inintial support for simple and recursive stubbing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

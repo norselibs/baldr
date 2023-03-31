@@ -1,4 +1,7 @@
 package io.baldr;
 
-public interface MockVerification {
+import java.util.function.Consumer;
+
+public interface MockVerification<T> {
+    void thenCalled(Consumer<T> consumer);
 }

@@ -2,7 +2,6 @@ package io.baldr;
 
 import io.ran.AutoMapper;
 import io.ran.AutoMapperClassLoader;
-import io.ran.AutoWrapperWriter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.util.CheckClassAdapter;
 
@@ -14,11 +13,13 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
+@SuppressWarnings("rawtypes")
 public class Baldr {
-    private static Map<String, Class> mocks = new HashMap<>();
+    private static final Map<String, Class> mocks = new HashMap<>();
 
-    private static AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
+    private static final AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
 
     @SuppressWarnings({"rawtype","unchecked"})
     public static <T> T mock(Class<T> tClass) {
@@ -47,7 +48,11 @@ public class Baldr {
 
     }
 
-    public static <T> MockVerification assertCalled(T t, Consumer<T> consumer) {
-        return new MockVerificationImpl<T>(t, consumer);
+    public static <T> MockVerification<T> assertCalled(T t, Consumer<T> consumer) {
+        return new MockVerificationImpl<>(t, consumer);
+    }
+
+    public static <T, R> Stub<T, R> when(T t, Function<T, R> consumer) {
+        return new Stub<>(t, consumer);
     }
 }

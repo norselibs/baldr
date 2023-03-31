@@ -2,18 +2,23 @@ package io.baldr;
 
 import org.hamcrest.Matcher;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.hamcrest.Matchers.equalTo;
 
+@SuppressWarnings("rawtypes")
 public class MockInvocation<T> {
-    private MockInvocations mockInvocations;
+    private final MockInvocations mockInvocations;
     private final T on;
     private final String methodName;
     private final List<MockInvocationParameter> parameters = new ArrayList<>();
+    private int order;
+    private final ConcurrentLinkedQueue<Object> returnValues = new ConcurrentLinkedQueue<>();
 
     public MockInvocation(MockInvocations mockInvocations, T on, String methodName) {
         this.mockInvocations = mockInvocations;
@@ -26,17 +31,15 @@ public class MockInvocation<T> {
         return this;
     }
 
-    public void end() {
-        mockInvocations.finish();
+    public Object end() {
+        return mockInvocations.finish();
     }
 
-    public boolean matchesAny(Queue<MockInvocation<?>> invocations) {
-        return invocations.stream().anyMatch(invocation -> {
-            return invocation.matches((MockInvocation) this);
-        });
+    public Optional<MockInvocation<?>> matchesAny(Queue<MockInvocation<?>> invocations) {
+        return invocations.stream().filter(invocation -> invocation.matches((MockInvocation) this)).findFirst();
     }
 
-    private boolean matches(MockInvocation<T> tMockInvocation) {
+    public boolean matches(MockInvocation<T> tMockInvocation) {
         if (!(on == tMockInvocation.on)) {
             return false;
         }
@@ -47,12 +50,12 @@ public class MockInvocation<T> {
             MockInvocationParameter matcherParameter = parameters.get(i);
             MockInvocationParameter actualParameter = tMockInvocation.parameters.get(i);
             Matcher<?> matcher;
-            if(matcherParameter instanceof Matcher<?>) {
+            if(matcherParameter instanceof Matcher<?>) { // This requires a bit of investigation into hamcrest
                 matcher = (Matcher<?>) matcherParameter;
             } else {
-                matcher = equalTo(matcherParameter);
+                matcher = equalTo(matcherParameter.getValue());
             }
-            if (!matcher.matches(actualParameter)) {
+            if (!matcher.matches(actualParameter.getValue())) {
                 return false;
             }
         }
@@ -62,5 +65,32 @@ public class MockInvocation<T> {
     @Override
     public String toString() {
         return on.getClass().getSuperclass().getSimpleName()+"."+methodName+"()";
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public <R> void addReturnValue(R returnValue) {
+        returnValues.add(returnValue);
+    }
+
+    public Object popReturnValue() {
+        if (returnValues.size() == 1) {
+            return returnValues.peek();
+        }
+        return returnValues.poll();
+    }
+
+    public Method getMethod() {
+        try {
+            return on.getClass().getMethod(methodName, parameters.stream().map(MockInvocationParameter::getType).toArray(Class[]::new));
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

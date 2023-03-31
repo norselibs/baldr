@@ -11,11 +11,9 @@ package io.baldr;
 import io.ran.*;
 import org.objectweb.asm.Opcodes;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
+@SuppressWarnings("rawtypes")
 public class MockWriter extends AutoMapperClassWriter {
 	private Clazz superClazz;
 	Clazz wrapperGenerated;
@@ -94,12 +92,19 @@ public class MockWriter extends AutoMapperClassWriter {
 						mw.invoke(MockInvocation.class.getMethod("addParameter", Class.class, String.class, Object.class));
 					}
 
-					mw.invoke(MockInvocation.class.getMethod("end"));
 
-					if (cm.getReturnType() == null) {
-						mw.nullConst();
+					if (cm.getReturnType() != null) {
+						mw.invoke(MockInvocation.class.getMethod("end"));
+						if(cm.getReturnType().isPrimitive()) {
+							mw.unbox(cm.getReturnType());
+						} else {
+							mw.cast(cm.getReturnType());
+						}
+
 						mw.returnOf(cm.getReturnType());
 					} else {
+						mw.invoke(MockInvocation.class.getMethod("end"));
+
 						mw.returnNothing();
 					}
 

@@ -1,5 +1,6 @@
 package io.baldr;
 
+@SuppressWarnings("rawtypes")
 public class MockInvocationParameter {
     private final Class<?> pClass;
     private final String name;
@@ -9,5 +10,17 @@ public class MockInvocationParameter {
         this.pClass = pClass;
         this.name = name;
         this.value = value;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public Class getType() {
+        return pClass;
+    }
+
+    public String getName() {
+        return name;
     }
 }
