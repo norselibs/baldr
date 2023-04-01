@@ -1,10 +1,11 @@
 package io.baldr;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 class MockVerificationImpl<T> implements MockVerification<T> {
     T on;
-    private MockInvocation<?> previousMatch;
+    private static AtomicReference<MockInvocation<?>> previousMatch = new AtomicReference<>();
 
     public MockVerificationImpl(T t, Consumer<T> consumer) {
         on = t;
@@ -16,8 +17,8 @@ class MockVerificationImpl<T> implements MockVerification<T> {
 
     private void called(Consumer<T> consumer) {
         int previousOrder = -1;
-        if (previousMatch != null) {
-            previousOrder = previousMatch.getOrder();
+        if (previousMatch.get() != null) {
+            previousOrder = previousMatch.get().getOrder();
         }
         MockShadow mockShadow = ((MockedObject<?>) on).$getInvocations();
         mockShadow.enterVerificationMode();
@@ -27,7 +28,7 @@ class MockVerificationImpl<T> implements MockVerification<T> {
         if(previousOrder > -1 && previousOrder > currentMatch.getOrder()) {
             throw new MockVerificationException(previousMatch.toString()+" was expected to be called before "+ currentMatch);
         }
-        previousMatch = currentMatch;
+        previousMatch.set(currentMatch);
     }
 
     @Override

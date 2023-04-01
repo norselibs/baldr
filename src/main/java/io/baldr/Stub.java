@@ -14,7 +14,7 @@ public class Stub<T, R> {
         mockShadow.enterStubbingMode();
         consumer.apply(on);
 
-        Object previousRecursiveStub = mockShadow.getPreviousRecursiveStub();
+        Object previousRecursiveStub = mockShadow.getActiveStub();
         if (previousRecursiveStub == null || previousRecursiveStub == on) {
             stubInvocation = mockShadow.getCurrent();
         } else {

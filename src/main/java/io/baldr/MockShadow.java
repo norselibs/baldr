@@ -11,9 +11,9 @@ public class MockShadow {
 
     private InvocationMode invocationMode;
     private MockInvocation<?> currentInvocation;
-    private final AtomicInteger invocationOrder = new AtomicInteger(0);
+    private static final AtomicInteger invocationOrder = new AtomicInteger(0);
     private MockInvocation<?> previousMatch;
-    private Object previousRecursiveStub = null;
+    private Object activeStub = null;
 
     public MockShadow() {
         invocationMode = new Invoke(this);
@@ -59,8 +59,8 @@ public class MockShadow {
         return currentInvocation;
     }
 
-    public MockedObject<?> getPreviousRecursiveStub() {
-        return (MockedObject<?>) previousRecursiveStub;
+    public MockedObject<?> getActiveStub() {
+        return (MockedObject<?>) activeStub;
     }
 
     public int incrementOrder() {
@@ -87,8 +87,8 @@ public class MockShadow {
         stubs.add(current);
     }
 
-    public void setPreviousRecursiveStub(Object stub) {
-        previousRecursiveStub = stub;
+    public void setActiveStub(Object stub) {
+        activeStub = stub;
     }
 
     public ConcurrentLinkedQueue<MockInvocation<?>> getStubs() {

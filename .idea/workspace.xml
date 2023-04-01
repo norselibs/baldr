@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/InvocationMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Invoke.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/VerificationSetup.java" afterDir="false" />
+    <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="Introduced invocation mode to make a better split between different ways a shadow mock is used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +231,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680234989079</updated>
       <workItem from="1680234990317" duration="5736000" />
-      <workItem from="1680241832072" duration="9879000" />
+      <workItem from="1680241832072" duration="13739000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -254,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680255670149</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Introduced invocation mode to make a better split between different ways a shadow mock is used">
+      <created>1680259744264</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680259744264</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +271,8 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="Inintial support for simple and recursive stubbing" />
     <MESSAGE value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
+    <MESSAGE value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
+    <option name="LAST_COMMIT_MESSAGE" value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -51,6 +51,34 @@ public class BaldrTest {
         }
     }
 
+
+    @Test
+    public void inOrderVerification_onDifferentMocks() {
+        Car car = mock(Car.class);
+        Car car2 = mock(Car.class);
+        car.openDoor();
+        car2.openDoor();
+
+        assertCalled(car, Car::openDoor);
+        assertCalled(car2, Car::openDoor);
+    }
+
+    @Test
+    public void invalidInOrderVerificationOnDifferentMocks() {
+        Car car = mock(Car.class);
+        Car car2 = mock(Car.class);
+        car2.openDoor();
+        car.openDoor();
+
+        try {
+            assertCalled(car, Car::openDoor);
+            assertCalled(car2, Car::openDoor);
+            fail();
+        } catch (MockVerificationException e) {
+            assertEquals("Car.openDoor() was expected to be called before Car.openDoor()", e.getMessage());
+        }
+    }
+
     @Test
     public void inOrderMissingFirstVerification() {
         Car car = mock(Car.class);

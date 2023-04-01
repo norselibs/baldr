@@ -27,12 +27,13 @@ public class StubSetup implements InvocationMode {
         } else if (returnType.is(Clazz.of(String.class), Collections.emptySet())) {
             return null;
         } else {
-            mockShadow.setPreviousRecursiveStub(mock(returnType.clazz));
-            mockShadow.exitStubbingMode();
-            mockShadow.getPreviousRecursiveStub().$getInvocations().enterStubbingMode();
+            MockedObject<?> stub = (MockedObject<?>) mock(returnType.clazz);
+            mockShadow.setActiveStub(stub);
+            //mockShadow.exitStubbingMode();
+            stub.$getInvocations().enterStubbingMode();
 
-            mockShadow.getCurrent().addReturnValue(mockShadow.getPreviousRecursiveStub());
-            return mockShadow.getPreviousRecursiveStub();
+            mockShadow.getCurrent().addReturnValue(stub);
+            return stub;
         }
     }
 }
