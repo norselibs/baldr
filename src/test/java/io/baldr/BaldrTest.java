@@ -76,8 +76,8 @@ public class BaldrTest {
         car.openDoor();
         car2.openDoor();
 
-        assertCalled(car, Car::openDoor);
-        assertCalled(car2, Car::openDoor);
+        assertCalled(car, Car::openDoor)
+                .thenCalled(car2, Car::openDoor);
     }
 
     @Test
@@ -88,12 +88,22 @@ public class BaldrTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor);
-            assertCalled(car2, Car::openDoor);
+            assertCalled(car, Car::openDoor).thenCalled(car2, Car::openDoor);
             fail();
         } catch (MockVerificationException e) {
             assertEquals("Car.openDoor() was expected to be called before Car.openDoor()", e.getMessage());
         }
+    }
+
+    @Test
+    public void individualAssertionsDoesNotImplyOrdering() {
+        Car car = mock(Car.class);
+        Car car2 = mock(Car.class);
+        car2.openDoor();
+        car.openDoor();
+
+        assertCalled(car, Car::openDoor);
+        assertCalled(car2, Car::openDoor);
     }
 
     @Test
@@ -158,5 +168,41 @@ public class BaldrTest {
         when(car, c -> c.getEngine().getCylinderCount()).thenReturn(5);
 
         assertEquals(5, car.getEngine().getCylinderCount());
+    }
+
+    @Test
+    public void recursiveAssertion() {
+        Car car = mock(Car.class);
+
+        car.getEngine().getCylinderCount();
+
+        assertCalled(car, c-> c.getEngine().getCylinderCount());
+    }
+
+    @Test
+    public void recursiveInvalidAssertion() {
+        Car car = mock(Car.class);
+
+        car.getEngine();
+
+        try {
+            assertCalled(car, c-> c.getEngine().getCylinderCount());
+            fail();
+        } catch (MockVerificationException e) {
+
+        }
+    }
+
+    @Test
+    public void recursiveInvalidInitialCallAssertion() {
+        Car car = mock(Car.class);
+
+        try {
+            assertCalled(car, c-> c.getEngine().getCylinderCount());
+            fail();
+        } catch (MockVerificationException e) {
+
+        }
+
     }
 }

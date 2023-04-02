@@ -1,5 +1,8 @@
 package io.baldr;
 
+import io.ran.Clazz;
+
+import java.util.Collections;
 import java.util.Optional;
 
 public class VerificationSetup implements InvocationMode {
@@ -16,15 +19,12 @@ public class VerificationSetup implements InvocationMode {
     }
 
     @Override
-    public Object finish() {
-        Optional<MockInvocation<?>> match = mockShadow.getCurrent().matchesAny(mockShadow.getInvocations());
+    public Optional<Object> finish(MockInvocation invocation) {
+        Optional<MockInvocation<?>> match = invocation.matchesAny(mockShadow.getInvocations());
         if(match.isEmpty()) {
             throw new MockVerificationException("No matching invocations of "+ mockShadow.getCurrent().toString()+" invoked on mock");
-        } else {
-            mockShadow.setPreviousMatch(match.get());
         }
+        return Optional.empty();
 
-        mockShadow.resetCurrent();
-        return null;
     }
 }

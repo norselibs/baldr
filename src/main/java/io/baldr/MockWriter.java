@@ -41,7 +41,8 @@ public class MockWriter extends AutoMapperClassWriter {
 		mw.load(0);
 		mw.invoke(new MethodSignature(wrappeeClass.clazz.getConstructor()));
 		mw.load(0);
-		mw.invoke(MockShadow.class.getMethod("get"));
+		mw.load(0);
+		mw.invoke(MockShadow.class.getMethod("get", Object.class));
 		mw.putfield(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
 		mw.returnNothing();
 		mw.end();
@@ -56,7 +57,7 @@ public class MockWriter extends AutoMapperClassWriter {
 
 	private void buildMockMethods() {
 		try {
-			ClazzMethod cm = new ClazzMethod(Clazz.of(MockedObject.class), MockedObject.class.getMethod("$getInvocations"));
+			ClazzMethod cm = new ClazzMethod(Clazz.of(MockedObject.class), MockedObject.class.getMethod("$getShadow"));
 			if (!wrapperClazz.declaresMethod(cm)) {
 				MethodWriter mw = method(Access.Public, cm.getSignature());
 				mw.load(0);

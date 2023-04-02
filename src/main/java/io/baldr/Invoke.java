@@ -1,10 +1,6 @@
 package io.baldr;
 
-import io.ran.Clazz;
-
 import java.util.Optional;
-
-import static io.baldr.Baldr.mock;
 
 public class Invoke implements InvocationMode {
     private MockShadow mockShadow;
@@ -20,17 +16,12 @@ public class Invoke implements InvocationMode {
     }
 
     @Override
-    public Object finish() {
-        Optional<MockInvocation<?>> stub = mockShadow.getStubs().stream().filter(s -> s.matches((MockInvocation)mockShadow.getCurrent())).findFirst();
+    public Optional<Object> finish(MockInvocation invocation) {
+        Optional<MockInvocation> stub = invocation.getMockShadow().getStubs().stream().filter(s -> s.matches(invocation)).findFirst();
         if (stub.isPresent()) {
-            return stub.get().popReturnValue();
+            return Optional.ofNullable(stub.get().popReturnValue());
         } else {
-            Clazz<?> returnType = Clazz.of(mockShadow.getCurrent().getMethod().getReturnType());
-            if (returnType.isPrimitive() || returnType.isBoxedPrimitive()) {
-                return returnType.getDefaultValue();
-            } else {
-                return mock(returnType.clazz);
-            }
+            return Optional.empty();
         }
 
     }

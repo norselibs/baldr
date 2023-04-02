@@ -3,10 +3,7 @@ package io.baldr;
 import org.hamcrest.Matcher;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -32,11 +29,24 @@ public class MockInvocation<T> {
     }
 
     public Object end() {
-        return mockShadow.finish();
+        return mockShadow.finish(this);
     }
 
     public Optional<MockInvocation<?>> matchesAny(Queue<MockInvocation<?>> invocations) {
         return invocations.stream().filter(invocation -> invocation.matches((MockInvocation) this)).findFirst();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MockInvocation)) {
+            return false;
+        }
+        return matches((MockInvocation<T>) obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(on, methodName, parameters);
     }
 
     public boolean matches(MockInvocation<T> tMockInvocation) {
@@ -82,8 +92,10 @@ public class MockInvocation<T> {
     public Object popReturnValue() {
         if (returnValues.size() == 1) {
             return returnValues.peek();
+        } else if (!returnValues.isEmpty()) {
+            return returnValues.poll();
         }
-        return returnValues.poll();
+        return getMockShadow().getReturnMock(this);
     }
 
     public Method getMethod() {
@@ -92,5 +104,9 @@ public class MockInvocation<T> {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public MockShadow getMockShadow() {
+        return mockShadow;
     }
 }

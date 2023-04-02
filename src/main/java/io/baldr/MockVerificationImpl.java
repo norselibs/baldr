@@ -1,38 +1,48 @@
 package io.baldr;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 class MockVerificationImpl<T> implements MockVerification<T> {
-    T on;
-    private static AtomicReference<MockInvocation<?>> previousMatch = new AtomicReference<>();
+    private Object on;
+    private MockInvocation previous;
 
-    public MockVerificationImpl(T t, Consumer<T> consumer) {
+    public MockVerificationImpl(T t, Consumer<T> consumer, MockInvocation previous) {
         on = t;
+        this.previous = previous;
         if (!(on instanceof MockedObject)) {
             throw new RuntimeException(on.getClass().getName()+" must be a mock");
         }
-        called(consumer);
+        called(on, consumer);
     }
 
-    private void called(Consumer<T> consumer) {
-        int previousOrder = -1;
-        if (previousMatch.get() != null) {
-            previousOrder = previousMatch.get().getOrder();
+    private void called(Object instance, Consumer consumer) {
+        MockShadow mockShadow = ((MockedObject<?>) on).$getShadow();
+        MockContext.get().enterAssert();
+        try {
+            consumer.accept(instance);
+        } finally {
+            MockContext.get().exitAssert();
         }
-        MockShadow mockShadow = ((MockedObject<?>) on).$getInvocations();
-        mockShadow.enterVerificationMode();
-        consumer.accept(on);
-        mockShadow.exitVerificationMode();
-        MockInvocation<?> currentMatch = mockShadow.getPreviousMatch();
-        if(previousOrder > -1 && previousOrder > currentMatch.getOrder()) {
-            throw new MockVerificationException(previousMatch.toString()+" was expected to be called before "+ currentMatch);
+        MockInvocation<?> currentMatch = mockShadow.getMatchingInvocation();
+
+        if (previous != null) {
+            int previousOrder = previous.getOrder();
+            int currentOrder = currentMatch.getOrder();
+            if (previousOrder > -1 && previousOrder > currentOrder) {
+                throw new MockVerificationException(previous.toString() + " was expected to be called before " + currentMatch);
+            }
         }
-        previousMatch.set(currentMatch);
+        this.previous = currentMatch;
+
     }
 
     @Override
     public void thenCalled(Consumer<T> consumer) {
-        called(consumer);
+        called(on, consumer);
+    }
+
+    @Override
+    public <C> MockVerification<C> thenCalled(C c, Consumer<C> consumer) {
+        return new MockVerificationImpl<>(c, consumer, this.previous);
     }
 }

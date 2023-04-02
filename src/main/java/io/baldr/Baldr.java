@@ -49,10 +49,20 @@ public class Baldr {
     }
 
     public static <T> MockVerification<T> assertCalled(T t, Consumer<T> consumer) {
-        return new MockVerificationImpl<>(t, consumer);
+        MockContext.get().enterAssert();
+        try {
+            return new MockVerificationImpl<>(t, consumer, null);
+        } finally {
+            MockContext.get().exitAssert();
+        }
     }
 
     public static <T, R> Stub<T, R> when(T t, Function<T, R> consumer) {
-        return new Stub<>(t, consumer);
+        MockContext.get().enterStubbing();
+        try {
+            return new Stub<>(t, consumer);
+        } finally {
+            MockContext.get().exitStubbing();
+        }
     }
 }

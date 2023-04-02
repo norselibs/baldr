@@ -10,20 +10,9 @@ public class Stub<T, R> {
             throw new RuntimeException(on.getClass().getName()+" must be a mock");
         }
 
-        MockShadow mockShadow = ((MockedObject<?>) on).$getInvocations();
-        mockShadow.enterStubbingMode();
         consumer.apply(on);
+        stubInvocation = MockContext.get().getPrevious().orElseThrow();
 
-        Object previousRecursiveStub = mockShadow.getActiveStub();
-        if (previousRecursiveStub == null || previousRecursiveStub == on) {
-            stubInvocation = mockShadow.getCurrent();
-        } else {
-            MockShadow otherInvocations = ((MockedObject<?>) previousRecursiveStub).$getInvocations();
-            otherInvocations.exitStubbingMode();
-            stubInvocation = otherInvocations.getCurrent();
-        }
-
-        mockShadow.exitStubbingMode();
     }
 
     public void thenReturn(R returnValue) {
