@@ -3,6 +3,7 @@ package io.baldr;
 
 import org.junit.Test;
 
+import static io.baldr.hamcrest.Matchers.*;
 import static io.baldr.Baldr.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -15,6 +16,22 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.openDoor();
         assertCalled(car, Car::openDoor);
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_equalTo() {
+        Engine engine = new Engine();
+        Car car = mock(Car.class);
+        car.setEngine(engine);
+        assertCalled(car, c -> c.setEngine(equalTo(engine)));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_same() {
+        Engine engine = new Engine();
+        Car car = mock(Car.class);
+        car.setEngine(engine);
+        assertCalled(car, c -> c.setEngine(sameInstance(engine)));
     }
 
     @Test

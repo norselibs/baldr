@@ -23,4 +23,8 @@ public class Car {
     public Engine getEngine() {
         return null;
     }
+
+    public void setEngine(Engine engine) {
+
+    }
 }

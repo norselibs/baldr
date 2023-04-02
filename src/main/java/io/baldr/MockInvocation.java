@@ -47,11 +47,11 @@ public class MockInvocation<T> {
             return false;
         }
         for(int i=0;i<parameters.size();i++) {
-            MockInvocationParameter matcherParameter = parameters.get(i);
-            MockInvocationParameter actualParameter = tMockInvocation.parameters.get(i);
+            MockInvocationParameter actualParameter = parameters.get(i);
+            MockInvocationParameter matcherParameter = tMockInvocation.parameters.get(i);
             Matcher<?> matcher;
-            if(matcherParameter instanceof Matcher<?>) { // This requires a bit of investigation into hamcrest
-                matcher = (Matcher<?>) matcherParameter;
+            if(matcherParameter.getValue() instanceof Matcher<?>) { // This requires a bit of investigation into hamcrest
+                matcher = (Matcher<?>) matcherParameter.getValue();
             } else {
                 matcher = equalTo(matcherParameter.getValue());
             }

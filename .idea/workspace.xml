@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="minor adjustments to code readability and added support for in order verification accross different mock instances">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/BaldrMatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/MatcherWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +85,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="io.baldr.hamcrest" />
       <recent name="io.baldr" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
@@ -93,6 +95,7 @@
       <recent name="io.baldr" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.baldr.hamcrest" />
       <recent name="io.baldr" />
     </key>
   </component>
@@ -120,7 +123,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.invalidInOrderVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrTest.hamcrestMatchingVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -133,7 +136,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.invalidInOrderVerification&quot;" />
+            <option value="&quot;io.baldr.BaldrTest.hamcrestMatchingVerification&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -215,10 +218,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.BaldrTest" />
+        <item itemvalue="Gradle.BaldrTest.hamcrestMatchingVerification" />
         <item itemvalue="Gradle.BaldrTest.simpleStubbing" />
         <item itemvalue="Gradle.BaldrTest.recursiveStubbing" />
         <item itemvalue="Gradle.BaldrTest.simpleParameterMatching" />
-        <item itemvalue="Gradle.BaldrTest.invalidInOrderVerification" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680259744264</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="minor adjustments to code readability and added support for in order verification accross different mock instances">
+      <created>1680331587162</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680331587162</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,7 +282,8 @@
     <MESSAGE value="Inintial support for simple and recursive stubbing" />
     <MESSAGE value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
     <MESSAGE value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
-    <option name="LAST_COMMIT_MESSAGE" value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
+    <MESSAGE value="minor adjustments to code readability and added support for in order verification accross different mock instances" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor adjustments to code readability and added support for in order verification accross different mock instances" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
