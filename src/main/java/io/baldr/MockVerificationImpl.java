@@ -1,5 +1,7 @@
 package io.baldr;
 
+import io.ran.CrudRepository;
+
 import java.util.function.Consumer;
 
 class MockVerificationImpl<T> implements MockVerification<T> {
@@ -17,15 +19,11 @@ class MockVerificationImpl<T> implements MockVerification<T> {
 
     private void called(Object instance, Consumer consumer) {
         MockShadow mockShadow = ((MockedObject<?>) on).$getShadow();
-        MockContext.get().enterAssert();
-        try {
-            consumer.accept(instance);
-        } finally {
-            MockContext.get().exitAssert();
-        }
+        consumer.accept(instance);
+
         MockInvocation<?> currentMatch = mockShadow.getMatchingInvocation();
 
-        if (previous != null) {
+        if (previous != null && currentMatch != null) {
             int previousOrder = previous.getOrder();
             int currentOrder = currentMatch.getOrder();
             if (previousOrder > -1 && previousOrder > currentOrder) {
@@ -38,7 +36,12 @@ class MockVerificationImpl<T> implements MockVerification<T> {
 
     @Override
     public void thenCalled(Consumer<T> consumer) {
-        called(on, consumer);
+        try {
+            MockContext.get().enterAssert();
+            called(on, consumer);
+        } finally {
+            MockContext.get().exitAssert();
+        }
     }
 
     @Override

@@ -87,14 +87,22 @@ public class MockWriter extends AutoMapperClassWriter {
 					int i = 0;
 					for (ClazzMethodParameter p : cm.parameters()) {
 						mw.dup();
-						mw.push(p.getClazz());
-						mw.push(cm.getName());
-						mw.load(++i, p.getClazz());
-						mw.invoke(MockInvocation.class.getMethod("addParameter", Class.class, String.class, Object.class));
+						if (p.getClazz().isPrimitive()) {
+							mw.push(p.getClazz().getPrimitive().getDescriptor());
+							mw.push(cm.getName());
+							mw.load(++i, p.getClazz());
+							mw.box(p.getClazz());
+							mw.invoke(MockInvocation.class.getMethod("addParameter", String.class, String.class, Object.class));
+						} else {
+							mw.push(p.getClazz());
+							mw.push(cm.getName());
+							mw.load(++i, p.getClazz());
+							mw.invoke(MockInvocation.class.getMethod("addParameter", Class.class, String.class, Object.class));
+						}
 					}
 
 
-					if (cm.getReturnType() != null) {
+					if (!cm.getReturnType().isVoid()) {
 						mw.invoke(MockInvocation.class.getMethod("end"));
 						if(cm.getReturnType().isPrimitive()) {
 							mw.unbox(cm.getReturnType());
@@ -105,7 +113,7 @@ public class MockWriter extends AutoMapperClassWriter {
 						mw.returnOf(cm.getReturnType());
 					} else {
 						mw.invoke(MockInvocation.class.getMethod("end"));
-
+						mw.pop();
 						mw.returnNothing();
 					}
 

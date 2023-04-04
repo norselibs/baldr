@@ -1,11 +1,14 @@
 package io.baldr;
 
+import io.ran.Clazz;
+import io.ran.Primitives;
 import org.hamcrest.Matcher;
 
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static io.baldr.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.equalTo;
 
 @SuppressWarnings("rawtypes")
@@ -25,6 +28,11 @@ public class MockInvocation<T> {
 
     public MockInvocation<T> addParameter(Class<?> pClass, String name, Object value) {
         parameters.add(new MockInvocationParameter(pClass, name, value));
+        return this;
+    }
+
+    public MockInvocation<T> addParameter(String pClass, String name, Object value) {
+        parameters.add(new MockInvocationParameter(Primitives.get(pClass).getPrimitive(), name, value));
         return this;
     }
 
@@ -56,14 +64,42 @@ public class MockInvocation<T> {
         if (!(methodName.equals(tMockInvocation.methodName))) {
             return false;
         }
+
         for(int i=0;i<parameters.size();i++) {
+
             MockInvocationParameter actualParameter = parameters.get(i);
             MockInvocationParameter matcherParameter = tMockInvocation.parameters.get(i);
+            /*
+
+            */
             Matcher<?> matcher;
             if(matcherParameter.getValue() instanceof Matcher<?>) { // This requires a bit of investigation into hamcrest
                 matcher = (Matcher<?>) matcherParameter.getValue();
             } else {
-                matcher = equalTo(matcherParameter.getValue());
+                Clazz matcherParameterClazz = Clazz.of(matcherParameter.getType());
+                if (matcherParameter.getType().isAssignableFrom(String.class) || matcherParameterClazz.isPrimitive() || matcherParameterClazz.isBoxedPrimitive()) {
+                    Optional<Matcher> specifiedMatcher = getPrimitiveMatcher(matcherParameterClazz.getBoxed().clazz, String.valueOf(matcherParameter.getValue()));
+                    if(specifiedMatcher.isEmpty()) {
+                        if (actualParameter.getType().isPrimitive()) {
+                            long numberOfPrimitivesInParameters = parameters.stream()
+                                    .filter(p -> actualParameter.getType().equals(p.getType()) && p.getType().isPrimitive())
+                                    .count();
+                            long numberOfPrimitiveMatchersInParameters = MockContext.get().numberOfPrimitiveMatchers(actualParameter.getType());
+                            if(MockContext.get().isNotÍnvoking()
+                                    && (
+                                    (numberOfPrimitivesInParameters > 0 && numberOfPrimitiveMatchersInParameters > 0)
+                                            && numberOfPrimitivesInParameters != numberOfPrimitiveMatchersInParameters
+                            )
+                            ) {
+                                throw new RuntimeException("If multiple primitives as passed into a method, either all or none of the parameters must be a matcher");
+                            }
+                        }
+                        specifiedMatcher = MockContext.get().popPrimitiveMatcher(matcherParameter.getType());
+                    }
+                    matcher = specifiedMatcher.isPresent() ? specifiedMatcher.get() : equalTo(matcherParameter.getValue());
+                } else {
+                    matcher = equalTo(matcherParameter.getValue());
+                }
             }
             if (!matcher.matches(actualParameter.getValue())) {
                 return false;

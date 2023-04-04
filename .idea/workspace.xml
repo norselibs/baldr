@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="refactored how in order is working, to require thenCalled for in order to work&#10;also refactored some cross mock shadow instance context data into an object by itself">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Added readme with a small intro to the project">
+      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,11 +98,57 @@
       <recent name="io.baldr" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="io.baldr.hamcrest" />
       <recent name="io.baldr" />
+      <recent name="io.baldr.hamcrest" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.BaldrTest">
+  <component name="RunManager" selected="Gradle.Tests in 'io.baldr'">
+    <configuration name="BaldrHamcrestTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleans_sameMethodMultipleTimes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleans_sameMethodMultipleTimes&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="BaldrTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -119,7 +172,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.hamcrestMatchingVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrTest.inOrderMissingSecondVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -132,7 +185,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.hamcrestMatchingVerification&quot;" />
+            <option value="&quot;io.baldr.BaldrTest.inOrderMissingSecondVerification&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -142,7 +195,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.recursiveStubbing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Tests in 'io.baldr'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -155,53 +208,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.recursiveStubbing&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="BaldrTest.simpleParameterMatching" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.simpleParameterMatching&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="BaldrTest.simpleStubbing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.simpleStubbing&quot;" />
+            <option value="&quot;io.baldr.*&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -213,11 +220,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'io.baldr'" />
+        <item itemvalue="Gradle.BaldrTest.inOrderMissingSecondVerification" />
         <item itemvalue="Gradle.BaldrTest" />
-        <item itemvalue="Gradle.BaldrTest.hamcrestMatchingVerification" />
-        <item itemvalue="Gradle.BaldrTest.simpleStubbing" />
-        <item itemvalue="Gradle.BaldrTest.recursiveStubbing" />
-        <item itemvalue="Gradle.BaldrTest.simpleParameterMatching" />
+        <item itemvalue="Gradle.BaldrHamcrestTest" />
+        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleans_sameMethodMultipleTimes" />
       </list>
     </recent_temporary>
   </component>
@@ -267,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680331587162</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added readme with a small intro to the project">
+      <created>1680477827013</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680477827013</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +293,8 @@
     <MESSAGE value="Renamed MockInvocations to MockShadow instead, to further show that this is a shadow class to the MockObject interface" />
     <MESSAGE value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
     <MESSAGE value="minor adjustments to code readability and added support for in order verification accross different mock instances" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor adjustments to code readability and added support for in order verification accross different mock instances" />
+    <MESSAGE value="Added readme with a small intro to the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added readme with a small intro to the project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -289,8 +304,21 @@
           <line>1324</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="cm.getReturnType()" language="JAVA" />
+        <watch expression="cm.getName()" language="JAVA" />
+        <watch expression="p.getClazz()" language="JAVA" />
+        <watch expression="MockContext.get()" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

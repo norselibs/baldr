@@ -19,22 +19,6 @@ public class BaldrTest {
     }
 
     @Test
-    public void hamcrestMatchingVerification_equalTo() {
-        Engine engine = new Engine();
-        Car car = mock(Car.class);
-        car.setEngine(engine);
-        assertCalled(car, c -> c.setEngine(equalTo(engine)));
-    }
-
-    @Test
-    public void hamcrestMatchingVerification_same() {
-        Engine engine = new Engine();
-        Car car = mock(Car.class);
-        car.setEngine(engine);
-        assertCalled(car, c -> c.setEngine(sameInstance(engine)));
-    }
-
-    @Test
     public void simpleNegativeVerification() {
         Car car = mock(Car.class);
 
