@@ -35,7 +35,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.openDoor();
         car.closeDoor();
-        assertCalled(car, Car::openDoor).thenCalled(Car::openDoor);
+        assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class BaldrTest {
             assertCalled(car, c -> c.setCarName("Hyundai"));
             fail();
         } catch (MockVerificationException e) {
-            assertEquals("No matching invocations of Car.setCarName() invoked on mock", e.getMessage());
+            assertEquals("No matching invocations of Car.setCarName(\"Hyundai\") invoked on mock", e.getMessage());
         }
     }
 
@@ -173,6 +173,7 @@ public class BaldrTest {
             assertCalled(car, c-> c.getEngine().getCylinderCount());
             fail();
         } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Engine.getCylinderCount() invoked on mock", e.getMessage());
 
         }
     }
@@ -185,7 +186,7 @@ public class BaldrTest {
             assertCalled(car, c-> c.getEngine().getCylinderCount());
             fail();
         } catch (MockVerificationException e) {
-
+            assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
         }
 
     }

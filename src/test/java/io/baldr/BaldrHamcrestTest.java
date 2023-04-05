@@ -118,4 +118,30 @@ public class BaldrHamcrestTest {
         assertCalled(engine, e -> e.setStarted(equalTo(true)));
         assertCalled(engine, e -> e.setEnabled(equalTo(false)));
     }
+
+    @Test
+    public void hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withoutMatchers() {
+        Engine engine = mock(Engine.class);
+        engine.multipleBooleans(true, false, true);
+        assertCalled(engine, e -> e.multipleBooleans(true, false, true));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withMatchers() {
+        Engine engine = mock(Engine.class);
+        engine.multipleBooleans(true, false, true);
+        assertCalled(engine, e -> e.multipleBooleans(equalTo(true), equalTo(false), equalTo(true)));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withSomeMatchers() {
+        Engine engine = mock(Engine.class);
+        engine.multipleBooleans(true, false, true);
+        try {
+            assertCalled(engine, e -> e.multipleBooleans(equalTo(true), false, equalTo(true)));
+            fail();
+        } catch (MultiplePrimitivesWithMixedMatchersException e) {
+            assertEquals("If multiple primitives as passed into a method, either all or none of the parameters must be a matcher", e.getMessage());
+        }
+    }
 }

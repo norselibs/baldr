@@ -56,8 +56,12 @@ public class MockShadow {
         });
     }
 
-    public MockInvocation getMatchingInvocation() {
-        return invocations.stream().filter(mi -> currentInvocation.matches(mi)).findFirst().orElse(null);
+    public Optional<MockInvocation> popMatchingInvocation(MockInvocation invocation) {
+        Optional<MockInvocation> matching = invocations.stream().filter(mi -> mi.matches(invocation)).findFirst();
+        if (matching.isPresent()) {
+            invocations.remove(matching.get());
+        }
+        return matching;
     }
 
     public MockInvocation<?> getCurrent() {

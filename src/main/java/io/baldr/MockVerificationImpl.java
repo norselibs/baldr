@@ -1,7 +1,6 @@
 package io.baldr;
 
-import io.ran.CrudRepository;
-
+import java.util.Optional;
 import java.util.function.Consumer;
 
 class MockVerificationImpl<T> implements MockVerification<T> {
@@ -18,20 +17,8 @@ class MockVerificationImpl<T> implements MockVerification<T> {
     }
 
     private void called(Object instance, Consumer consumer) {
-        MockShadow mockShadow = ((MockedObject<?>) on).$getShadow();
+        MockContext.get().setCurrentVerificationImpl(this);
         consumer.accept(instance);
-
-        MockInvocation<?> currentMatch = mockShadow.getMatchingInvocation();
-
-        if (previous != null && currentMatch != null) {
-            int previousOrder = previous.getOrder();
-            int currentOrder = currentMatch.getOrder();
-            if (previousOrder > -1 && previousOrder > currentOrder) {
-                throw new MockVerificationException(previous.toString() + " was expected to be called before " + currentMatch);
-            }
-        }
-        this.previous = currentMatch;
-
     }
 
     @Override
@@ -46,6 +33,19 @@ class MockVerificationImpl<T> implements MockVerification<T> {
 
     @Override
     public <C> MockVerification<C> thenCalled(C c, Consumer<C> consumer) {
-        return new MockVerificationImpl<>(c, consumer, this.previous);
+        try {
+            MockContext.get().enterAssert();
+            return new MockVerificationImpl<>(c, consumer, this.previous);
+        } finally {
+            MockContext.get().exitAssert();
+        }
+    }
+
+    public Optional<MockInvocation> getPrevious() {
+        return Optional.ofNullable(previous);
+    }
+
+    public void setPrevious(MockInvocation mockInvocation) {
+        this.previous = mockInvocation;
     }
 }

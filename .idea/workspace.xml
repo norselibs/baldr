@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Added readme with a small intro to the project">
-      <change afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Support for primitives in hamcrest matchers">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MultiplePrimitivesWithMixedMatchersException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/VerificationSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/VerificationSetup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" afterDir="false" />
     </list>
@@ -88,8 +91,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="io.baldr.hamcrest" />
       <recent name="io.baldr" />
+      <recent name="io.baldr.hamcrest" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -102,8 +105,8 @@
       <recent name="io.baldr.hamcrest" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'io.baldr'">
-    <configuration name="BaldrHamcrestTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger">
+    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -116,7 +119,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrHamcrestTest&quot;" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -149,7 +152,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrTest.invalidInOrderVerificationOnDifferentMocks" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -162,7 +165,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest&quot;" />
+            <option value="&quot;io.baldr.BaldrTest.invalidInOrderVerificationOnDifferentMocks&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -172,7 +175,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.inOrderMissingSecondVerification" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrTest.recursiveInvalidAssertion" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -185,7 +188,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.inOrderMissingSecondVerification&quot;" />
+            <option value="&quot;io.baldr.BaldrTest.recursiveInvalidAssertion&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -220,10 +223,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" />
         <item itemvalue="Gradle.Tests in 'io.baldr'" />
-        <item itemvalue="Gradle.BaldrTest.inOrderMissingSecondVerification" />
-        <item itemvalue="Gradle.BaldrTest" />
-        <item itemvalue="Gradle.BaldrHamcrestTest" />
+        <item itemvalue="Gradle.BaldrTest.invalidInOrderVerificationOnDifferentMocks" />
+        <item itemvalue="Gradle.BaldrTest.recursiveInvalidAssertion" />
         <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleans_sameMethodMultipleTimes" />
       </list>
     </recent_temporary>
@@ -281,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680477827013</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Support for primitives in hamcrest matchers">
+      <created>1680609853254</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680609853254</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +304,8 @@
     <MESSAGE value="Introduced invocation mode to make a better split between different ways a shadow mock is used" />
     <MESSAGE value="minor adjustments to code readability and added support for in order verification accross different mock instances" />
     <MESSAGE value="Added readme with a small intro to the project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added readme with a small intro to the project" />
+    <MESSAGE value="Support for primitives in hamcrest matchers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Support for primitives in hamcrest matchers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -306,8 +317,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="87" />
+          <line>80</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="147" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -23,4 +23,12 @@ public class MockInvocationParameter {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        if (String.class.isAssignableFrom(pClass)) {
+            return "\""+value.toString()+"\"";
+        }
+        return value.toString();
+    }
 }

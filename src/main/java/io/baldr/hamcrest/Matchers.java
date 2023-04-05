@@ -62,7 +62,7 @@ public class Matchers {
                 }
             }
             if (id != null) {
-                MockContext.get().registerMatcher(id.toString(), t.getClass(), supplier.get());
+                MockContext.get().registerMatcher(UUID.randomUUID().toString(), t.getClass(), supplier.get());
                 return (T) id;
             }
             return t;

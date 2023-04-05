@@ -15,6 +15,7 @@ public class MockContext {
     private InvocationModeEnum invocationMode = InvocationModeEnum.Invoke;
     private ConcurrentLinkedDeque<MockInvocation<?>> invocations = new ConcurrentLinkedDeque<>();
     private ConcurrentLinkedDeque<RegisteredMatcher> matchers = new ConcurrentLinkedDeque<>();
+    private MockVerificationImpl currentVerification;
 
     public static MockContext get() {
         return context.get();
@@ -27,6 +28,7 @@ public class MockContext {
     private void clear() {
         invocations.clear();
         matchers.clear();
+        currentVerification = null;
     }
 
     public void enterAssert() {
@@ -58,7 +60,7 @@ public class MockContext {
     }
 
     public boolean isNotÍnvoking() {
-        return invocationMode == InvocationModeEnum.Invoke;
+        return invocationMode != InvocationModeEnum.Invoke;
     }
 
     public <T> void registerMatcher(String id, Class parameterType, Matcher t) {
@@ -66,13 +68,13 @@ public class MockContext {
     }
 
     public long numberOfPrimitiveMatchers(Class type) {
-        return matchers.stream().filter(m -> m.matcher.getClass().equals(type)).count();
+        return matchers.stream().filter(m -> m.type.equals(type)).count();
     }
 
     public Optional<Matcher> popPrimitiveMatcher(Class type) {
         Optional<Matcher> matcher = matchers.stream().filter(m -> m.type.equals(type)).findFirst().map(m -> m.matcher);
         if (matcher.isPresent()) {
-            matchers.remove(matcher.get());
+            matchers.removeIf(rm -> matcher.get().equals(rm.matcher));
             return matcher;
         }
         return Optional.empty();
@@ -84,6 +86,14 @@ public class MockContext {
 
     public Optional<Matcher> getPrimitiveMatcher(String id, Class type) {
         return matchers.stream().filter(m -> m.type.equals(type) && m.id.equals(id)).map(rm -> rm.matcher).findFirst();
+    }
+
+    public void setCurrentVerificationImpl(MockVerificationImpl currentVerification) {
+        this.currentVerification = currentVerification;
+    }
+
+    public MockVerificationImpl getCurrentVerification() {
+        return currentVerification;
     }
 
     private class RegisteredMatcher {

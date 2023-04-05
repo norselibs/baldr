@@ -40,4 +40,8 @@ public class Engine {
     public void setEnabled(boolean b) {
 
     }
+
+    public void multipleBooleans(boolean a, boolean b, boolean c) {
+
+    }
 }
