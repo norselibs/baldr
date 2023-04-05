@@ -1,5 +1,6 @@
 package io.baldr;
 
+import io.baldr.hamcrest.Matchers;
 import io.ran.Clazz;
 import io.ran.Primitives;
 import org.hamcrest.Matcher;
@@ -8,7 +9,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static io.baldr.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -99,10 +99,7 @@ public class MockInvocation<T> {
                             throw new MultiplePrimitivesWithMixedMatchersException("If multiple primitives as passed into a method, either all or none of the parameters must be a matcher");
                         }
                     }
-                    Optional<Matcher> specifiedMatcher = getPrimitiveMatcher(matcherParameterClazz.getBoxed().clazz, String.valueOf(matcherParameter.getValue()));
-                    if(specifiedMatcher.isEmpty()) {
-                        specifiedMatcher = MockContext.get().popPrimitiveMatcher(matcherParameterClazz.getBoxed().clazz);
-                    }
+                    Optional<Matcher> specifiedMatcher = getSpecifiedMatcher(matcherParameter);
 
                     matcher = specifiedMatcher.isPresent() ? specifiedMatcher.get() : equalTo(matcherParameter.getValue());
                 } else {
@@ -116,13 +113,22 @@ public class MockInvocation<T> {
         return true;
     }
 
+    public Optional<Matcher> getSpecifiedMatcher(MockInvocationParameter matcherParameter) {
+        Clazz matcherParameterClazz = Clazz.of(matcherParameter.getType());
+        Optional<Matcher> specifiedMatcher = getPrimitiveMatcher(matcherParameterClazz.getBoxed().clazz, String.valueOf(matcherParameter.getValue()));
+        if(specifiedMatcher.isEmpty()) {
+            specifiedMatcher = MockContext.get().popPrimitiveMatcher(matcherParameterClazz.getBoxed().clazz);
+        }
+        return specifiedMatcher;
+    }
+
     @Override
     public String toString() {
         return on.getClass().getSuperclass().getSimpleName()+"."+methodName+"("+descParameters()+")";
     }
 
     private String descParameters() {
-        return parameters.stream().map(mip -> mip.toString()).collect(Collectors.joining(", "));
+        return parameters.stream().map(o -> getSpecifiedMatcher(o).orElse(o.getValue() instanceof Matcher ? (Matcher) o.getValue() : equalTo(o.getValue()))).map(mip -> mip.toString()).collect(Collectors.joining(", "));
     }
 
     public void setOrder(int order) {

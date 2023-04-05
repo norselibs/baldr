@@ -3,11 +3,10 @@ package io.baldr;
 
 import org.junit.Test;
 
-import static io.baldr.Baldr.*;
-import static io.baldr.hamcrest.Matchers.equalTo;
-import static io.baldr.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static io.baldr.Baldr.assertCalled;
+import static io.baldr.Baldr.mock;
+import static io.baldr.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 public class BaldrHamcrestTest {
 
@@ -21,6 +20,19 @@ public class BaldrHamcrestTest {
     }
 
     @Test
+    public void hamcrestMatchingVerification_not_equalTo() {
+        Engine engine = new Engine();
+        Car car = mock(Car.class);
+        car.setEngine(new Engine());
+
+        try {
+            assertCalled(car, c -> c.setEngine(equalTo(engine)));
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage()+" did not start with expected value",e.getMessage().startsWith("No matching invocations of Car.setEngine(<io.baldr.Engine@"));
+        }
+    }
+
+    @Test
     public void hamcrestMatchingVerification_same() {
         Engine engine = new Engine();
         Car car = mock(Car.class);
@@ -30,10 +42,67 @@ public class BaldrHamcrestTest {
 
     @Test
     public void hamcrestMatchingVerification_equalToOnString() {
-        Engine engine = new Engine();
         Car car = mock(Car.class);
         car.setCarName("Hyundai");
         assertCalled(car, c -> c.setCarName(equalTo("Hyundai")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_startsWith() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        assertCalled(car, c -> c.setCarName(startsWith("Hyun")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_startsWithIgnoringCase() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        assertCalled(car, c -> c.setCarName(startsWithIgnoringCase("hyun")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_endsWith() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        assertCalled(car, c -> c.setCarName(endsWith("dai")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_endsWithIgnoringCase() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        assertCalled(car, c -> c.setCarName(endsWithIgnoringCase("daI")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_endsWithIgnoringCase_failCase() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        try {
+            assertCalled(car, c -> c.setCarName(endsWithIgnoringCase("Hyun")));
+            fail();
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Car.setCarName(a string ending with \"Hyun\" ignoring case) invoked on mock", e.getMessage());
+        }
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_matchesPatternString() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        assertCalled(car, c -> c.setCarName(matchesPattern(".+da.+")));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_matchesPatternString_failCase() {
+        Car car = mock(Car.class);
+        car.setCarName("Hyundai");
+        try {
+            assertCalled(car, c -> c.setCarName(matchesPattern(".+ad.+")));
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Car.setCarName(a string matching the pattern '.+ad.+') invoked on mock", e.getMessage());
+        }
     }
 
     @Test
@@ -41,6 +110,18 @@ public class BaldrHamcrestTest {
         Engine engine = mock(Engine.class);
         engine.setCylinderCount(5);
         assertCalled(engine, e -> e.setCylinderCount(equalTo(5)));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_equalToOnInteger_failCase() {
+        Engine engine = mock(Engine.class);
+        engine.setCylinderCount(3);
+        try {
+            assertCalled(engine, e -> e.setCylinderCount(equalTo(5)));
+            fail();
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Engine.setCylinderCount(<5>) invoked on mock", e.getMessage());
+        }
     }
 
     @Test

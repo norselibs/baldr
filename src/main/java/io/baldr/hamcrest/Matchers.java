@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
 public class Matchers {
     private static final Map<String, Class<Matcher<?>>> matchers = new HashMap<>();
@@ -143,4 +144,23 @@ public class Matchers {
         return matcher(t, () -> IsSame.sameInstance(t));
     }
 
+    public static String startsWith(String s) {
+        return matcher(s, () -> org.hamcrest.Matchers.startsWith(s));
+    }
+
+    public static String startsWithIgnoringCase(String s) {
+        return matcher(s, () -> org.hamcrest.Matchers.startsWithIgnoringCase(s));
+    }
+
+    public static String endsWith(String s) {
+        return matcher(s, () -> org.hamcrest.Matchers.endsWith(s));
+    }
+
+    public static String endsWithIgnoringCase(String s) {
+        return matcher(s, () -> org.hamcrest.Matchers.endsWithIgnoringCase(s));
+    }
+
+    public static String matchesPattern(String s) {
+        return matcher(s, () -> org.hamcrest.Matchers.matchesPattern(s));
+    }
 }

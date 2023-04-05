@@ -55,6 +55,23 @@ public class MatcherWriter extends AutoMapperClassWriter {
 
 	protected void build() {
 		buildMatcherMethods();
+		buildToString();
+	}
+
+	private void buildToString() {
+		try {
+			ClazzMethod cm = new ClazzMethod(wrapperGenerated, Object.class.getMethod("toString"));
+			MethodWriter mw = method(Access.Public, cm.getSignature());
+			mw.load(0);
+			mw.getField(wrapperGenerated, "matcher", Clazz.raw(Matcher.class));
+			mw.cast(Clazz.of(Object.class));
+			mw.invoke(Object.class.getMethod("toString"));
+			mw.returnOf(Clazz.of(String.class));
+			mw.end();
+
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		}
 
 	}
 
