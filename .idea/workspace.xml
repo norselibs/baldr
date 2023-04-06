@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Try enable github actions with publishing">
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="add ran repo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
@@ -99,7 +99,7 @@
       <recent name="io.baldr.hamcrest" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'io.baldr'">
+  <component name="RunManager" selected="Gradle.baldr [build]">
     <configuration name="BaldrHamcrestTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -169,29 +169,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrTest.invalidInOrderVerificationOnDifferentMocks" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrTest.invalidInOrderVerificationOnDifferentMocks&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="Tests in 'io.baldr'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -215,13 +192,34 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="baldr [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.baldr [build]" />
         <item itemvalue="Gradle.Tests in 'io.baldr'" />
         <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_not_equalTo" />
         <item itemvalue="Gradle.BaldrHamcrestTest" />
         <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" />
-        <item itemvalue="Gradle.BaldrTest.invalidInOrderVerificationOnDifferentMocks" />
       </list>
     </recent_temporary>
   </component>
@@ -313,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680756224295</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add ran repo">
+      <created>1680756424192</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1680756424192</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +336,8 @@
     <MESSAGE value="More hamcrest matcher support" />
     <MESSAGE value="Support for hamcrest not matcher" />
     <MESSAGE value="Try enable github actions with publishing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Try enable github actions with publishing" />
+    <MESSAGE value="add ran repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add ran repo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
