@@ -9,6 +9,16 @@ version '0.1-SNAPSHOT'
 repositories {
     mavenLocal()
     mavenCentral()
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/norselibs/ran")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_CI_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_CI_TOKEN")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -19,6 +29,8 @@ dependencies {
     implementation 'cglib:cglib:3.3.0'
     implementation 'org.hamcrest:hamcrest:2.2'
 }
+
+
 
 publishing {
     repositories {
