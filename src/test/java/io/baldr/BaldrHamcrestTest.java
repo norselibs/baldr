@@ -20,13 +20,35 @@ public class BaldrHamcrestTest {
     }
 
     @Test
-    public void hamcrestMatchingVerification_not_equalTo() {
+    public void hamcrestMatchingVerification_equalTo_failCase() {
         Engine engine = new Engine();
         Car car = mock(Car.class);
         car.setEngine(new Engine());
 
         try {
             assertCalled(car, c -> c.setEngine(equalTo(engine)));
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage()+" did not start with expected value",e.getMessage().startsWith("No matching invocations of Car.setEngine(<io.baldr.Engine@"));
+        }
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_not_equalTo() {
+        Engine engine = new Engine();
+        Car car = mock(Car.class);
+        car.setEngine(new Engine());
+
+        assertCalled(car, c -> c.setEngine(not(equalTo(engine))));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_not_equalTo_failCase() {
+        Engine engine = new Engine();
+        Car car = mock(Car.class);
+        car.setEngine(engine);
+
+        try {
+            assertCalled(car, c -> c.setEngine(not(equalTo(engine))));
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage()+" did not start with expected value",e.getMessage().startsWith("No matching invocations of Car.setEngine(<io.baldr.Engine@"));
         }
@@ -224,5 +246,17 @@ public class BaldrHamcrestTest {
         } catch (MultiplePrimitivesWithMixedMatchersException e) {
             assertEquals("If multiple primitives as passed into a method, either all or none of the parameters must be a matcher", e.getMessage());
         }
+    }
+
+    @Test
+    public void changingMatcherOrNoMatchersBetweenDifferentMethods() {
+        Engine engine = mock(Engine.class);
+        engine.setCylinderCount(4);
+        engine.setCylinderCount(8);
+        engine.setCylinderCount(6);
+
+        assertCalled(engine, e -> e.setCylinderCount(equalTo(4)))
+                .thenCalled(e -> e.setCylinderCount(8))
+                .thenCalled(e -> e.setCylinderCount(equalTo(6)));
     }
 }

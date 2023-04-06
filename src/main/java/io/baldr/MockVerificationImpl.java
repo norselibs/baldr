@@ -3,8 +3,9 @@ package io.baldr;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 class MockVerificationImpl<T> implements MockVerification<T> {
-    private Object on;
+    private final Object on;
     private MockInvocation previous;
 
     public MockVerificationImpl(T t, Consumer<T> consumer, MockInvocation previous) {
@@ -22,13 +23,14 @@ class MockVerificationImpl<T> implements MockVerification<T> {
     }
 
     @Override
-    public void thenCalled(Consumer<T> consumer) {
+    public MockVerification<T> thenCalled(Consumer<T> consumer) {
         try {
             MockContext.get().enterAssert();
             called(on, consumer);
         } finally {
             MockContext.get().exitAssert();
         }
+        return this;
     }
 
     @Override

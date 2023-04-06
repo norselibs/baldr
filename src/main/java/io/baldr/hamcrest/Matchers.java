@@ -1,7 +1,6 @@
 package io.baldr.hamcrest;
 
 import io.baldr.MockContext;
-import io.baldr.MockedObject;
 import io.ran.AutoMapper;
 import io.ran.AutoMapperClassLoader;
 import org.hamcrest.Matcher;
@@ -16,16 +15,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
-import java.util.regex.Pattern;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class Matchers {
     private static final Map<String, Class<Matcher<?>>> matchers = new HashMap<>();
     private static final AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
     private static <T> T buildMatcher(Class<T> tClass) {
         try {
+            if (BaldrMatcher.class.isAssignableFrom(tClass)) {
+                return (T) matchers.get(tClass.getSuperclass().getName()).getConstructor().newInstance();
+            }
             return (T)matchers.computeIfAbsent(tClass.getName(), c -> {
 
                 try {
@@ -105,7 +106,7 @@ public class Matchers {
             return ThreadLocalRandom.current().nextInt(Short.MIN_VALUE, Short.MAX_VALUE);
         }
         if (aClass.isAssignableFrom(float.class) || aClass.isAssignableFrom(Float.class)) {
-            return ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE/100, (int) Integer.MAX_VALUE/100);
+            return ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE/100, Integer.MAX_VALUE/100);
         }
         if (aClass.isAssignableFrom(char.class) || aClass.isAssignableFrom(Character.class)) {
             return ThreadLocalRandom.current().nextInt(Character.MIN_VALUE, Character.MAX_VALUE);
@@ -138,6 +139,10 @@ public class Matchers {
 
     public static  <T> T equalTo(T t) {
         return matcher(t, () -> IsEqual.equalTo(t));
+    }
+
+    public static  <T> T not(T t) {
+        return matcher(t, () -> org.hamcrest.Matchers.not(t));
     }
 
     public static  <T> T sameInstance(T t) {

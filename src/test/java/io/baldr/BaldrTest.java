@@ -3,7 +3,6 @@ package io.baldr;
 
 import org.junit.Test;
 
-import static io.baldr.hamcrest.Matchers.*;
 import static io.baldr.Baldr.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -57,11 +56,14 @@ public class BaldrTest {
     public void inOrderVerification_onDifferentMocks() {
         Car car = mock(Car.class);
         Car car2 = mock(Car.class);
+        Car car3 = mock(Car.class);
         car.openDoor();
         car2.openDoor();
+        car3.openDoor();
 
         assertCalled(car, Car::openDoor)
-                .thenCalled(car2, Car::openDoor);
+                .thenCalled(car2, Car::openDoor)
+                .thenCalled(car3, Car::openDoor);
     }
 
     @Test
