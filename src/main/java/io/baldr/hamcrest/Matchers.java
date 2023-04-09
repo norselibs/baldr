@@ -154,6 +154,14 @@ public class Matchers {
         return matcher(tClass, null, () -> org.hamcrest.Matchers.notNullValue(tClass));
     }
 
+    public static  <T> T any(Class<T> tClass) {
+        return matcher(tClass, null, () -> org.hamcrest.Matchers.any(tClass));
+    }
+
+    public static  <T> T anything(Class<T> tClass) {
+        return matcher(tClass, null, () -> (Matcher<T>)org.hamcrest.Matchers.anything());
+    }
+
     public static  <T> T sameInstance(T t) {
         return matcher((Class<T>)t.getClass(), t, () -> IsSame.sameInstance(t));
     }

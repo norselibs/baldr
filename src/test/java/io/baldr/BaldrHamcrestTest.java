@@ -95,6 +95,42 @@ public class BaldrHamcrestTest {
     }
 
     @Test
+    public void hamcrestMatchingVerification_any() {
+        Car car = mock(Car.class);
+        car.setEngine(new Engine());
+
+        assertCalled(car, c -> c.setEngine(any(Engine.class)));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_any_nullValue() {
+        Car car = mock(Car.class);
+        car.setEngine(null);
+
+        try {
+            assertCalled(car, c -> c.setEngine(any(Engine.class)));
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Car.setEngine(an instance of io.baldr.Engine) invoked on mock", e.getMessage());
+        }
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_anything() {
+        Car car = mock(Car.class);
+        car.setEngine(new Engine());
+
+        assertCalled(car, c -> c.setEngine(anything(Engine.class)));
+    }
+
+    @Test
+    public void hamcrestMatchingVerification_anything_nullValue() {
+        Car car = mock(Car.class);
+        car.setEngine(null);
+
+        assertCalled(car, c -> c.setEngine(anything(Engine.class)));
+    }
+
+    @Test
     public void hamcrestMatchingVerification_same() {
         Engine engine = new Engine();
         Car car = mock(Car.class);
