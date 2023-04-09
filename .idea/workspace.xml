@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="add ran repo">
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="depend on the published version of ran">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/MatcherWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/MatcherWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +102,12 @@
       <recent name="io.baldr.hamcrest" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.baldr [build]">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle build" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.Tests in 'io.baldr'">
     <configuration name="BaldrHamcrestTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -215,8 +223,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.baldr [build]" />
         <item itemvalue="Gradle.Tests in 'io.baldr'" />
+        <item itemvalue="Gradle.baldr [build]" />
         <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_not_equalTo" />
         <item itemvalue="Gradle.BaldrHamcrestTest" />
         <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" />
@@ -318,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680756424192</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="depend on the published version of ran">
+      <created>1680756562497</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1680756562497</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -337,7 +352,8 @@
     <MESSAGE value="Support for hamcrest not matcher" />
     <MESSAGE value="Try enable github actions with publishing" />
     <MESSAGE value="add ran repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ran repo" />
+    <MESSAGE value="depend on the published version of ran" />
+    <option name="LAST_COMMIT_MESSAGE" value="depend on the published version of ran" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

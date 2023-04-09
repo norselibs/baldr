@@ -49,13 +49,13 @@ public class Matchers {
         }
     }
 
-    public static  <T> T matcher(T t, Supplier<Matcher<T>> supplier) {
+    public static  <T> T matcher(Class<T> tClass, T t, Supplier<Matcher<T>> supplier) {
         if (t instanceof String) {
             String id = UUID.randomUUID().toString();
-            MockContext.get().registerMatcher(id, t.getClass(), supplier.get());
+            MockContext.get().registerMatcher(id, tClass, supplier.get());
             return (T) id;
         }
-        if (Boolean.class.isAssignableFrom(t.getClass())) {
+        if (Boolean.class.isAssignableFrom(tClass)) {
             Queue<Boolean> possibleValues = new ArrayDeque<>(Arrays.asList(false, true));
             Boolean id = null;
             for (Boolean pv : possibleValues) {
@@ -64,28 +64,28 @@ public class Matchers {
                 }
             }
             if (id != null) {
-                MockContext.get().registerMatcher(UUID.randomUUID().toString(), t.getClass(), supplier.get());
+                MockContext.get().registerMatcher(UUID.randomUUID().toString(), tClass, supplier.get());
                 return (T) id;
             }
             return t;
         }
-        if (isNumber(t.getClass())) {
+        if (isNumber(tClass)) {
             try {
                 String id;
                 do {
                     String tid = String.valueOf(getRandom(t.getClass()));
                     if (Character.class.isAssignableFrom(t.getClass())) {
                         id = Character.valueOf(tid.charAt(0)).toString();
-                    }  else {
+                    } else {
                         id = t.getClass().getMethod("valueOf", String.class).invoke(null, tid).toString();
                     }
-                } while(MockContext.get().hasMatcher(t.getClass(), id));
+                } while (MockContext.get().hasMatcher(tClass, id));
 
-                MockContext.get().registerMatcher(id, t.getClass(), supplier.get());
+                MockContext.get().registerMatcher(id, tClass, supplier.get());
 
-                if (Character.class.isAssignableFrom(t.getClass())) {
-                    return (T)Character.valueOf(id.charAt(0));
-                }  else {
+                if (Character.class.isAssignableFrom(tClass)) {
+                    return (T) Character.valueOf(id.charAt(0));
+                } else {
                     return (T) t.getClass().getMethod("valueOf", String.class).invoke(null, id);
                 }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -93,7 +93,8 @@ public class Matchers {
             }
         }
 
-        BaldrMatcher generated = (BaldrMatcher) buildMatcher(t.getClass());
+
+        BaldrMatcher generated = (BaldrMatcher) buildMatcher(tClass);
         generated.setMatcher(supplier.get());
         return (T) generated;
     }
@@ -138,34 +139,42 @@ public class Matchers {
     }
 
     public static  <T> T equalTo(T t) {
-        return matcher(t, () -> IsEqual.equalTo(t));
+        return matcher((Class<T>)t.getClass(), t, () -> IsEqual.equalTo(t));
     }
 
     public static  <T> T not(T t) {
-        return matcher(t, () -> org.hamcrest.Matchers.not(t));
+        return matcher((Class<T>)t.getClass(), t, () -> org.hamcrest.Matchers.not(t));
+    }
+
+    public static  <T> T nullValue(Class<T> tClass) {
+        return matcher(tClass, null, () -> org.hamcrest.Matchers.nullValue(tClass));
+    }
+
+    public static  <T> T notNullValue(Class<T> tClass) {
+        return matcher(tClass, null, () -> org.hamcrest.Matchers.notNullValue(tClass));
     }
 
     public static  <T> T sameInstance(T t) {
-        return matcher(t, () -> IsSame.sameInstance(t));
+        return matcher((Class<T>)t.getClass(), t, () -> IsSame.sameInstance(t));
     }
 
     public static String startsWith(String s) {
-        return matcher(s, () -> org.hamcrest.Matchers.startsWith(s));
+        return matcher(String.class,s, () -> org.hamcrest.Matchers.startsWith(s));
     }
 
     public static String startsWithIgnoringCase(String s) {
-        return matcher(s, () -> org.hamcrest.Matchers.startsWithIgnoringCase(s));
+        return matcher(String.class, s, () -> org.hamcrest.Matchers.startsWithIgnoringCase(s));
     }
 
     public static String endsWith(String s) {
-        return matcher(s, () -> org.hamcrest.Matchers.endsWith(s));
+        return matcher(String.class, s, () -> org.hamcrest.Matchers.endsWith(s));
     }
 
     public static String endsWithIgnoringCase(String s) {
-        return matcher(s, () -> org.hamcrest.Matchers.endsWithIgnoringCase(s));
+        return matcher(String.class, s, () -> org.hamcrest.Matchers.endsWithIgnoringCase(s));
     }
 
     public static String matchesPattern(String s) {
-        return matcher(s, () -> org.hamcrest.Matchers.matchesPattern(s));
+        return matcher(String.class, s, () -> org.hamcrest.Matchers.matchesPattern(s));
     }
 }

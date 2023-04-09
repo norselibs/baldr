@@ -42,7 +42,7 @@ public class MatcherWriter extends AutoMapperClassWriter {
 								Stream.of(Clazz.of(BaldrMatcher.class).getInternalName()))
 						, this.wrapperClazz.isInterface() ? Stream.of(this.wrapperClazz.getInternalName()) : Stream.empty()).toArray(String[]::new)		);
 
-		field(Access.Private, "matcher", Clazz.raw(Matcher.class), null);
+		field(Access.Private, "matcher", Clazz.of(Matcher.class), null);
 
 		MethodWriter mw = method(Access.Public, new MethodSignature(wrapperGenerated, "<init>", Clazz.getVoid()));
 		mw.load(0);
@@ -63,7 +63,7 @@ public class MatcherWriter extends AutoMapperClassWriter {
 			ClazzMethod cm = new ClazzMethod(wrapperGenerated, Object.class.getMethod("toString"));
 			MethodWriter mw = method(Access.Public, cm.getSignature());
 			mw.load(0);
-			mw.getField(wrapperGenerated, "matcher", Clazz.raw(Matcher.class));
+			mw.getField(wrapperGenerated, "matcher", Clazz.of(Matcher.class));
 			mw.cast(Clazz.of(Object.class));
 			mw.invoke(Object.class.getMethod("toString"));
 			mw.returnOf(Clazz.of(String.class));
@@ -81,7 +81,7 @@ public class MatcherWriter extends AutoMapperClassWriter {
 			if (!wrapperClazz.declaresMethod(cm)) {
 				MethodWriter mw = method(Access.Public, cm.getSignature());
 				mw.load(0);
-				mw.getField(wrapperGenerated, "matcher", Clazz.raw(Matcher.class));
+				mw.getField(wrapperGenerated, "matcher", Clazz.of(Matcher.class));
 				mw.load(1);
 				mw.invoke(Matcher.class.getMethod("matches", Object.class));
 				mw.returnPrimitive(Clazz.of(boolean.class));
@@ -94,7 +94,7 @@ public class MatcherWriter extends AutoMapperClassWriter {
 			if (!wrapperClazz.declaresMethod(cm)) {
 				MethodWriter mw = method(Access.Public, cm.getSignature());
 				mw.load(0);
-				mw.getField(wrapperGenerated, "matcher", Clazz.raw(Matcher.class));
+				mw.getField(wrapperGenerated, "matcher", Clazz.of(Matcher.class));
 				mw.load(1);
 				mw.load(2);
 				mw.invoke(Matcher.class.getMethod("describeMismatch", Object.class, Description.class));
