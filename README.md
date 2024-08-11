@@ -35,10 +35,15 @@ Unlike most other mock frameworks, Baldr defaults to having methods returning mo
 There is also, at the moment limited, support for hamcrest matchers:
 
 ```java
-    import static io.baldr.hamcrest.Matchers.*;
 
-    Engine engine = new Engine();
-    Car car = mock(Car.class);
-    car.setEngine(engine);
-    assertCalled(car, c -> c.setEngine(sameInstance(engine)));
+
+Engine engine = new Engine();
+Car car = mock(Car.class);
+    car.
+
+setEngine(engine);
+
+assertCalled(car, c ->c.
+
+setEngine(sameInstance(engine)));
 ```

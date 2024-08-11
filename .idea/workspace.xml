@@ -4,15 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="More matchers">
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Even more matchers">
+      <change afterPath="$PROJECT_DIR$/baldr-core/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Mock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockVerificationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockedObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-junit/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-junit/src/main/java/io/baldr/BaldrExtension.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-junit/src/test/java/io/baldr/AnnotationsTestJunit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/baldr-junit/src/test/java/io/baldr/Boat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Baldr.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Baldr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/InvocationMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/InvocationModeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationModeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Invoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Invoke.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockInvocationParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockInvocationParameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockVerification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockVerificationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MockedObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/MultiplePrimitivesWithMixedMatchersException.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MultiplePrimitivesWithMixedMatchersException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/Stub.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Stub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/StubSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/VerificationSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/VerificationSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/BaldrMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/hamcrest/BaldrMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/MatcherWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/hamcrest/MatcherWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/baldr/hamcrest/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Matchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrHamcrestTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/io/baldr/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/Engine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -32,6 +70,17 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="baldr" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="baldr" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="baldr" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -44,6 +93,7 @@
       <list>
         <option value="JUnit4 Test Class" />
         <option value="Interface" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -54,6 +104,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.2" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2NlO1RrYAn72fVwDrUEjkKaCFEN" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -62,13 +116,35 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.AnnotationsTestJunit.executor": "Run",
+    "Gradle.AnnotationsTestJunit.mockAnnotation.executor": "Run",
+    "Gradle.BaldrHamcrestTest.delegateMatcher_missingInvocation.executor": "Run",
+    "Gradle.BaldrHamcrestTest.executor": "Run",
+    "Gradle.BaldrHamcrestTest.failing_hamcrestMatchingVerification_equalToOnMultipleBooleans.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_anything_nullValue.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withMatchers.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withoutMatchers.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleans_sameMethodMultipleTimes.executor": "Run",
+    "Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalTo_failCase.executor": "Run",
+    "Gradle.BaldrTest.recursiveAutoStubbing.executor": "Run",
+    "Gradle.Build baldr.executor": "Run",
+    "Gradle.Tests in 'baldr'.executor": "Run",
+    "Gradle.Tests in 'io.baldr'.executor": "Run",
+    "Gradle.baldr [build].executor": "Run",
+    "Gradle.baldr [clean].executor": "Run",
+    "Gradle.baldr [test].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
-    "last_opened_file_path": "/Users/anton/workspace/baldr/.github/workflows",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/anton/workspace/baldr",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,7 +153,8 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -92,6 +169,9 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/baldr-core/src/test/java" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="io.baldr" />
     </key>
@@ -105,7 +185,7 @@
       <command value="gradle build" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'io.baldr'">
+  <component name="RunManager" selected="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalTo_failCase">
     <configuration name="BaldrHamcrestTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -117,7 +197,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":baldr-core:test" />
             <option value="--tests" />
             <option value="&quot;io.baldr.BaldrHamcrestTest&quot;" />
           </list>
@@ -127,9 +207,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrHamcrestTest.delegateMatcher_missingInvocation" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -140,9 +221,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":baldr-core:test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger&quot;" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.delegateMatcher_missingInvocation&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -150,9 +231,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_not_equalTo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withMatchers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -163,9 +245,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":baldr-core:test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_not_equalTo&quot;" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withMatchers&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -173,9 +255,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'io.baldr'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withoutMatchers" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -186,9 +269,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":baldr-core:test" />
             <option value="--tests" />
-            <option value="&quot;io.baldr.*&quot;" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withoutMatchers&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -196,9 +279,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="baldr [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BaldrHamcrestTest.hamcrestMatchingVerification_equalTo_failCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -209,36 +293,50 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
+            <option value=":baldr-core:test" />
+            <option value="--tests" />
+            <option value="&quot;io.baldr.BaldrHamcrestTest.hamcrestMatchingVerification_equalTo_failCase&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'io.baldr'" />
-        <item itemvalue="Gradle.baldr [build]" />
-        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_not_equalTo" />
+        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalTo_failCase" />
         <item itemvalue="Gradle.BaldrHamcrestTest" />
-        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnInteger" />
+        <item itemvalue="Gradle.BaldrHamcrestTest.delegateMatcher_missingInvocation" />
+        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withMatchers" />
+        <item itemvalue="Gradle.BaldrHamcrestTest.hamcrestMatchingVerification_equalToOnMultipleBooleansInSameMethod_withoutMatchers" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-f644763e9732-24582b8d" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7c4b14d4-7f70-412a-ab5c-5e692f0313ac" name="Changes" comment="" />
+      <changelist id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Even more matchers" />
       <created>1680234989079</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680234989079</updated>
       <workItem from="1680234990317" duration="5736000" />
       <workItem from="1680241832072" duration="13739000" />
+      <workItem from="1681122571676" duration="2169000" />
+      <workItem from="1720408847027" duration="2688000" />
+      <workItem from="1723194342050" duration="3867000" />
+      <workItem from="1723263363340" duration="7876000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -338,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681026337478</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Even more matchers">
+      <created>1681026677572</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1681026677572</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,7 +464,8 @@
     <MESSAGE value="add ran repo" />
     <MESSAGE value="depend on the published version of ran" />
     <MESSAGE value="More matchers" />
-    <option name="LAST_COMMIT_MESSAGE" value="More matchers" />
+    <MESSAGE value="Even more matchers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Even more matchers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -370,22 +476,34 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockInvocation.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="89" />
+          <url>file://$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Matchers.java</url>
+          <line>214</line>
+          <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/io/baldr/MockVerificationImpl.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="141" />
+          <url>file://$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockShadow.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockShadow.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockInvocation.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Matchers.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="169" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="GradleRunConfiguration">
-        <watch expression="cm.getReturnType()" language="JAVA" />
-        <watch expression="cm.getName()" language="JAVA" />
-        <watch expression="p.getClazz()" language="JAVA" />
         <watch expression="MockContext.get()" language="JAVA" />
       </configuration>
     </watches-manager>

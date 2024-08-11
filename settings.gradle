@@ -1,2 +1,4 @@
 rootProject.name = 'baldr'
+include ':baldr-core'
+include ':baldr-junit'
 
