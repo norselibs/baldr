@@ -8,6 +8,8 @@ subprojects {
     version '0.1-SNAPSHOT'
 
     repositories {
+        mavenLocal()
+        mavenCentral()
         repositories {
             maven {
                 name = "GitHubPackages"
@@ -18,8 +20,7 @@ subprojects {
                 }
             }
         }
-        mavenLocal()
-        mavenCentral()
+
     }
 
     dependencies {
