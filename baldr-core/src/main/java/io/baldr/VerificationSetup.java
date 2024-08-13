@@ -16,10 +16,10 @@ public class VerificationSetup implements InvocationMode {
     }
 
     @Override
-    public Optional<Object> finish(MockInvocation invocation) {
-        Optional<MockInvocation> match = mockShadow.popMatchingInvocation(invocation);
+    public InvocationResult<Object> finish(MockInvocation invocation) {
+        InvocationResult<MockInvocation> match = mockShadow.popMatchingInvocation(invocation);
 
-        if(match.isEmpty()) {
+        if(!match.isPresent()) {
             throw new MockVerificationException("No matching invocations of "+ mockShadow.getCurrent().toString()+" invoked on mock");
         }
         Optional<MockInvocation> previous = MockContext.get().getCurrentVerification().getPrevious();
@@ -32,7 +32,7 @@ public class VerificationSetup implements InvocationMode {
         }
 
         MockContext.get().getCurrentVerification().setPrevious(match.get());
-        return Optional.empty();
+        return InvocationResult.empty();
 
     }
 }

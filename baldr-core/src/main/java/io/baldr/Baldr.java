@@ -18,6 +18,9 @@ import java.util.function.Function;
 @SuppressWarnings("rawtypes")
 public class Baldr {
     private static final Map<String, Class> mocks = new HashMap<>();
+    private static final Map<String, Class> spies = new HashMap<>();
+    private static final Map<Integer, Object> spyInstances = new HashMap<>();
+
 
     private static final AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
 
@@ -31,13 +34,13 @@ public class Baldr {
             MockedObject<T> mockedObject = (MockedObject<T>) mocks.computeIfAbsent(tClass.getName(), c -> {
 
                 try {
-                    Path path = Paths.get("/tmp/" + tClass.getSimpleName() + "$Ran$Wrapper.class");
+//                    Path path = Paths.get("./generated/" + tClass.getSimpleName() + "$Baldr$Mock.class");
 
                     MockWriter visitor = new MockWriter(tClass.getSimpleName(), tClass);
                     byte[] bytes = visitor.toByteArray();
-                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
-                        outputStream.write(bytes);
-                    }
+//                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
+//                        outputStream.write(bytes);
+//                    }
 
                     CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
                     return classLoader.define(visitor.getName(), bytes);
@@ -45,11 +48,53 @@ public class Baldr {
                     throw new RuntimeException(e);
                 }
             }).getConstructor().newInstance();
-            if(name == null) {
-                mockedObject.$setName(tClass.getSimpleName());
-            }else {
-                mockedObject.$setName(name);
+             mockedObject.$setName(name);
+
+            return (T) mockedObject;
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public static <T> T spy(T t) {
+        return spy(t, null);
+    }
+
+    public static <T> T spy(T t, String name) {
+
+        try {
+            if (t instanceof MockedObject<?>) {
+                return t;
             }
+            int hc = System.identityHashCode(t);
+            if (spyInstances.containsKey(hc)) {
+                return (T) spyInstances.get(hc);
+            }
+            Class<T> tClass = (Class<T>) t.getClass();
+
+            SpiedObject<T> mockedObject = (SpiedObject<T>) spies.computeIfAbsent(tClass.getName(), c -> {
+
+                try {
+//                    Path path = Paths.get("./generated/" + tClass.getSimpleName() + "$Baldr$Spy.class");
+
+                    SpyWriter visitor = new SpyWriter(tClass.getSimpleName(), tClass);
+                    byte[] bytes = visitor.toByteArray();
+//                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
+//                        outputStream.write(bytes);
+//                    }
+
+                    CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
+                    return classLoader.define(visitor.getName(), bytes);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).getConstructor().newInstance();
+             mockedObject.$setName(name);
+
+            mockedObject.$setInstance(t);
+            spyInstances.put(hc, mockedObject);
             return (T) mockedObject;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);

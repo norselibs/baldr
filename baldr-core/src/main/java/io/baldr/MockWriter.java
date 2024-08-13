@@ -11,143 +11,67 @@ package io.baldr;
 import io.ran.*;
 import org.objectweb.asm.Opcodes;
 
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 @SuppressWarnings("rawtypes")
-public class MockWriter extends AutoMapperClassWriter {
-	private Clazz superClazz;
-	Clazz wrapperGenerated;
-	Clazz wrappeeClass;
+public class MockWriter extends MockWriterBase {
 
 	public MockWriter(String className, Class<?> tClass) throws NoSuchMethodException {
-		super(tClass);
+		super(className, tClass);
 		postFix = "$Baldr$Mock";
-		className = className+postFix;
+		this.className = className+postFix;
 		this.wrappeeClass = Clazz.of(tClass);
-		wrapperGenerated = Clazz.of(className);
+		wrapperGenerated = Clazz.of(this.className);
 		this.superClazz = this.wrapperClazz.isInterface() ? Clazz.of(Object.class) : this.wrapperClazz;
-		visit(Opcodes.V1_8
-				, Access.Public.getOpCode()
-				, className
-				, null
-				, superClazz.getInternalName()
-				, Stream.concat(
-						Stream.of(Clazz.ofClazzes(MockedObject.class, wrappeeClass).getInternalName())
-						, this.wrapperClazz.isInterface() ? Stream.of(this.wrapperClazz.getInternalName()) : Stream.empty()).toArray(String[]::new)		);
-
-		field(Access.Private, "_invocations", Clazz.of(MockShadow.class), null);
-		field(Access.Private, "_name", Clazz.of(String.class), null);
-
-		MethodWriter mw = method(Access.Public, new MethodSignature(wrapperGenerated, "<init>", Clazz.getVoid()));
-		mw.load(0);
-		mw.invoke(new MethodSignature(wrappeeClass.clazz.getConstructor()));
-		mw.load(0);
-		mw.load(0);
-		mw.invoke(MockShadow.class.getMethod("get", Object.class));
-		mw.putfield(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
-		mw.returnNothing();
-		mw.end();
 		build();
 	}
 
-
-	protected void build() {
-		buildMockMethods();
-		buildMethods();
-	}
-
-	private void buildMockMethods() {
+	protected void buildConstructor()  {
 		try {
-			ClazzMethod cm = new ClazzMethod(Clazz.of(MockedObject.class), MockedObject.class.getMethod("$getShadow"));
-			if (!wrapperClazz.declaresMethod(cm)) {
-				MethodWriter mw = method(Access.Public, cm.getSignature());
-				mw.load(0);
-				mw.getField(wrapperGenerated, "_invocations", Clazz.of(MockShadow.class));
-				mw.returnObject();
-				mw.end();
-			} else {
-				throw new Exception("A mock of a mock is not expected");
-			}
+			visit(Opcodes.V1_8
+					, Access.Public.getOpCode()
+					, className
+					, null
+					, superClazz.getInternalName()
+					, Stream.concat(
+							Stream.of(Clazz.ofClazzes(MockedObject.class, wrappeeClass).getInternalName())
+							, this.wrapperClazz.isInterface() ? Stream.of(this.wrapperClazz.getInternalName()) : Stream.empty()).toArray(String[]::new));
 
-			cm = new ClazzMethod(Clazz.of(MockedObject.class), MockedObject.class.getMethod("$setName", String.class));
-			if (!wrapperClazz.declaresMethod(cm)) {
-				MethodWriter mw = method(Access.Public, cm.getSignature());
-				mw.load(0);
-				mw.load(1);
-				mw.putfield(wrapperGenerated, "_name", Clazz.of(String.class));
-				mw.returnNothing();
-				mw.end();
-			} else {
-				throw new Exception("A mock of a mock is not expected");
-			}
+			MethodWriter mw = method(Access.Public, new MethodSignature(wrapperGenerated, "<init>", Clazz.getVoid()));
 
-			cm = new ClazzMethod(Clazz.of(MockedObject.class), MockedObject.class.getMethod("$getName"));
-			if (!wrapperClazz.declaresMethod(cm)) {
-				MethodWriter mw = method(Access.Public, cm.getSignature());
+			List<Constructor> cts = Arrays.asList(wrappeeClass.clazz.getDeclaredConstructors());
+			Constructor constructor = cts.stream().sorted(Comparator.comparing(Constructor::getParameterCount)).findFirst().orElse(null);
+			if(constructor != null) {
 				mw.load(0);
-				mw.getField(wrapperGenerated, "_name", Clazz.of(String.class));
-				mw.returnObject();
-				mw.end();
-			} else {
-				throw new Exception("A mock of a mock is not expected");
-			}
+				Arrays.stream(constructor.getParameterTypes()).forEach(p -> {
+					if (p.isPrimitive()) {
+						mw.push(Clazz.of(p).getDefaultValue());
+					} else {
+						mw.nullConst();
+					}
+				});
 
+				mw.invoke(new MethodSignature(constructor));
+			} else {
+				mw.load(0);
+				mw.invoke(new MethodSignature(Object.class.getConstructor()));
+			}
+			mw.load(0);
+			mw.load(0);
+			mw.invoke(MockShadow.class.getMethod("get", Object.class));
+			mw.putfield(wrapperGenerated, "_invocations", Clazz.raw(MockShadow.class));
+			mw.returnNothing();
+			mw.end();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	private void buildMethods() {
-		wrappeeClass.methods().forEach(cm -> {
-			try {
-				if (!Clazz.of(Object.class).declaresMethod(cm)) {
-					MethodWriter mw = method(cm.getAccess(), cm.getSignature());
-					mw.load(0);
-					mw.getField(wrapperGenerated, "_invocations", Clazz.of(MockShadow.class));
-					mw.load(0);
-					mw.cast(wrappeeClass);
-					mw.push(cm.getName());
-					mw.invoke(MockShadow.class.getMethod("buildInvocation", Object.class, String.class));
-					int i = 0;
-					for (ClazzMethodParameter p : cm.parameters()) {
-						mw.dup();
-						if (p.getClazz().isPrimitive()) {
-							mw.push(p.getClazz().getPrimitive().getDescriptor());
-							mw.push(cm.getName());
-							mw.load(++i, p.getClazz());
-							mw.box(p.getClazz());
-							mw.invoke(MockInvocation.class.getMethod("addParameter", String.class, String.class, Object.class));
-						} else {
-							mw.push(p.getClazz());
-							mw.push(cm.getName());
-							mw.load(++i, p.getClazz());
-							mw.invoke(MockInvocation.class.getMethod("addParameter", Class.class, String.class, Object.class));
-						}
-					}
-
-
-					if (!cm.getReturnType().isVoid()) {
-						mw.invoke(MockInvocation.class.getMethod("end"));
-						if(cm.getReturnType().isPrimitive()) {
-							mw.unbox(cm.getReturnType());
-						} else {
-							mw.cast(cm.getReturnType());
-						}
-
-						mw.returnOf(cm.getReturnType());
-					} else {
-						mw.invoke(MockInvocation.class.getMethod("end"));
-						mw.pop();
-						mw.returnNothing();
-					}
-
-					mw.end();
-				}
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		});
 
 	}
+
+
 
 }

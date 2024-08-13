@@ -46,6 +46,18 @@ public class MockContext {
         invocationMode = InvocationModeEnum.Invoke;
     }
 
+    public static void pauseAssert() {
+        if (context.get().invocationMode == InvocationModeEnum.Assert) {
+            context.get().invocationMode = InvocationModeEnum.Pause;
+        }
+    }
+
+    public static void resumeAssert() {
+        if (context.get().invocationMode == InvocationModeEnum.Pause) {
+            context.get().invocationMode = InvocationModeEnum.Assert;
+        }
+    }
+
     public void exitStubbing() {
         clear();
         invocationMode = InvocationModeEnum.Invoke;

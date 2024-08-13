@@ -58,7 +58,7 @@ public class Matchers {
 //
 //    }
 
-    public static  <T> T    matcher(Class<T> tClass, T t, Supplier<Matcher<T>> supplier) {
+    public static  <T> T matcher(Class<T> tClass, T t, Supplier<Matcher<T>> supplier) {
         if (tClass.isAssignableFrom(String.class)) {
             String id = UUID.randomUUID().toString();
             MockContext.get().registerMatcher(id, tClass, supplier.get());

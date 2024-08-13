@@ -23,7 +23,7 @@ repositories {
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'
-    implementation "io.ran:ran-core:0.3-anton"
+    implementation 'io.ran:ran-core:0.0.1-187'
     implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
     implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'
     implementation 'cglib:cglib:3.3.0'

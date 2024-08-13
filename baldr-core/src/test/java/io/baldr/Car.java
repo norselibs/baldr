@@ -2,6 +2,7 @@ package io.baldr;
 
 public class Car {
     private String name;
+    private Engine engine;
 
     public void openDoor() {
 
@@ -21,11 +22,11 @@ public class Car {
     }
 
     public Engine getEngine() {
-        return null;
+        return engine;
     }
 
     public void setEngine(Engine engine) {
-
+        this.engine = engine;
     }
 
 	public void start() {

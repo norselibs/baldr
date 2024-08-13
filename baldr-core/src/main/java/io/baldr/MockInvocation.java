@@ -2,7 +2,9 @@ package io.baldr;
 
 import io.ran.Clazz;
 import io.ran.Primitives;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
 import org.hamcrest.core.IsEqual;
 
 import java.lang.reflect.Method;
@@ -35,7 +37,7 @@ public class MockInvocation<T> {
 		return this;
     }
 
-    public Object end() {
+    public InvocationResult<Object> end() {
         return mockShadow.finish(this);
     }
 
@@ -146,11 +148,14 @@ public class MockInvocation<T> {
     }
 
     private String descParameters() {
-        return parameters.stream().map(o -> getSpecifiedMatcher(o).orElse(
-                o.getValue() instanceof Matcher
-                        ? (Matcher) o.getValue()
-                        : null
-        )).filter(Objects::nonNull).map(Object::toString).collect(Collectors.joining(", "));
+        return parameters.stream().map(o -> getSpecifiedMatcher(o).map(sm -> {
+                StringDescription description = new StringDescription();
+                sm.describeMismatch(o, description);
+                return description.toString();
+            }).orElseGet(() -> {
+                return o.getType().isAssignableFrom(String.class) ? '"'+o.getValue().toString()+'"' : o.getValue().toString();
+                })
+        ).filter(Objects::nonNull).map(Object::toString).collect(Collectors.joining(", "));
     }
 
     public void setOrder(int order) {
@@ -165,13 +170,13 @@ public class MockInvocation<T> {
         returnValues.add(returnValue);
     }
 
-    public Object popReturnValue() {
+    public InvocationResult<Object> popReturnValue() {
         if (returnValues.size() == 1) {
-            return returnValues.peek();
+            return InvocationResult.of(returnValues.peek());
         } else if (!returnValues.isEmpty()) {
-            return returnValues.poll();
+            return InvocationResult.of(returnValues.poll());
         }
-        return getMockShadow().getReturnMock(this);
+        return InvocationResult.empty();
     }
 
     public Method getMethod() {

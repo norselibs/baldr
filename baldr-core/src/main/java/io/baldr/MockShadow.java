@@ -19,10 +19,10 @@ public class MockShadow {
     private MockInvocation currentInvocation;
     private static final AtomicInteger invocationOrder = new AtomicInteger(0);
     private Object activeMock = null;
-    private Object mockObject;
+    private MockedObject mockObject;
 
     public MockShadow(Object mockObject) {
-        this.mockObject = mockObject;
+        this.mockObject = (MockedObject) mockObject;
     }
 
     public static MockShadow get(Object mockObject) {
@@ -41,28 +41,39 @@ public class MockShadow {
         return MockContext.get().getInvocationMode(this);
     }
 
-    public Object finish(MockInvocation invocation) {
-        Optional<Object> ret = invocationMode().finish(invocation);
-        return ret.orElseGet(() -> {
+    public InvocationResult<Object> finish(MockInvocation invocation) {
+        InvocationResult<Object> ret = invocationMode().finish(invocation);
+        if (ret.isPresent()) {
+            return ret;
+
+        } else {
             Clazz<?> returnType = Clazz.of(getCurrent().getMethod().getReturnType());
             if (returnType.isVoid()) {
-                return null;
+                return InvocationResult.of(null);
             } else if (returnType.isPrimitive() || returnType.isBoxedPrimitive()) {
-                return returnType.getDefaultValue();
+                if (mockObject instanceof SpiedObject<?>) {
+                    return InvocationResult.empty();
+                }
+                return InvocationResult.of(returnType.getDefaultValue());
             } else if (returnType.clazz.isAssignableFrom(String.class)) {
-                return "";
+                return InvocationResult.of("");
             } else {
-                return getReturnMock(invocation);
+                if (mockObject instanceof SpiedObject<?>) {
+                    return InvocationResult.empty();
+                }
+
+                return InvocationResult.of(getReturnMock(invocation));
             }
-        });
+        }
     }
 
-    public Optional<MockInvocation> popMatchingInvocation(MockInvocation invocation) {
+    public InvocationResult<MockInvocation> popMatchingInvocation(MockInvocation invocation) {
         Optional<MockInvocation> matching = invocations.stream().filter(mi -> mi.matches(invocation)).findFirst();
         if (matching.isPresent()) {
             invocations.remove(matching.get());
+            return InvocationResult.of(matching.get());
         }
-        return matching;
+        return InvocationResult.empty();
     }
 
     public MockInvocation<?> getCurrent() {
@@ -94,7 +105,7 @@ public class MockShadow {
     }
 
     public String getName() {
-        return this.mockObject.getClass().getName();
+        return this.mockObject.getClass().getSuperclass().getSimpleName();
     }
 
     public void addStub(MockInvocation invocation) {

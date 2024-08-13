@@ -5,21 +5,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static io.baldr.Baldr.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class BaldrTest {
+public class BaldrSpyTest {
 
 
     @Test
     public void simpleVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.openDoor();
         assertCalled(car, Car::openDoor);
     }
 
     @Test
     public void simpleNegativeVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
 
         try {
             assertCalled(car, Car::openDoor);
@@ -31,8 +32,8 @@ public class BaldrTest {
 
     @Test
     public void namedMocks() {
-        Car car = mock(Car.class, "car");
-        Car car2 = mock(Car.class, "car2");
+        Car car = spy(new Car(), "car");
+        Car car2 = spy(new Car(), "car2");
         car.openDoor();
 
         try {
@@ -46,7 +47,7 @@ public class BaldrTest {
 
     @Test
     public void inOrderVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.openDoor();
         car.closeDoor();
         assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
@@ -54,7 +55,7 @@ public class BaldrTest {
 
     @Test
     public void invalidInOrderVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.closeDoor();
         car.openDoor();
 
@@ -69,9 +70,9 @@ public class BaldrTest {
 
     @Test
     public void inOrderVerification_onDifferentMocks() {
-        Car car = mock(Car.class);
-        Car car2 = mock(Car.class);
-        Car car3 = mock(Car.class);
+        Car car = spy(new Car());
+        Car car2 = spy(new Car());
+        Car car3 = spy(new Car());
         car.openDoor();
         car2.openDoor();
         car3.openDoor();
@@ -83,8 +84,8 @@ public class BaldrTest {
 
     @Test
     public void invalidInOrderVerificationOnDifferentMocks() {
-        Car car = mock(Car.class);
-        Car car2 = mock(Car.class);
+        Car car = spy(new Car());
+        Car car2 = spy(new Car());
         car2.openDoor();
         car.openDoor();
 
@@ -98,8 +99,8 @@ public class BaldrTest {
 
     @Test
     public void individualAssertionsDoesNotImplyOrdering() {
-        Car car = mock(Car.class);
-        Car car2 = mock(Car.class);
+        Car car = spy(new Car());
+        Car car2 = spy(new Car());
         car2.openDoor();
         car.openDoor();
 
@@ -109,7 +110,7 @@ public class BaldrTest {
 
     @Test
     public void inOrderMissingFirstVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.closeDoor();
 
         try {
@@ -122,7 +123,7 @@ public class BaldrTest {
 
     @Test
     public void inOrderMissingSecondVerification() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.openDoor();
 
         try {
@@ -135,7 +136,7 @@ public class BaldrTest {
 
     @Test
     public void simpleParameterMatching() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.setCarName("Toyota");
 
         assertCalled(car, c -> c.setCarName("Toyota"));
@@ -144,7 +145,7 @@ public class BaldrTest {
 
     @Test
     public void simpleFailedParameterMatching() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         car.setCarName("Toyota");
 
         try {
@@ -157,7 +158,7 @@ public class BaldrTest {
 
     @Test
     public void simpleStubbing() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
         when(car, Car::getCarName).thenReturn("Toyota");
 
         Assert.assertEquals("Toyota", car.getCarName());
@@ -165,23 +166,27 @@ public class BaldrTest {
 
     @Test
     public void recursiveStubbing() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
+        car.setEngine(new Engine());
         when(car, c -> c.getEngine().getCylinderCount()).thenReturn(5);
 
+
+        System.out.println(car.getEngine().getClass().getName());
         Assert.assertEquals(5, car.getEngine().getCylinderCount());
     }
 
     @Test
-    public void recursiveAutoMockingIntegerReturn() {
-        Car car = mock(Car.class);
-        car.start();
+    public void recursiveAutoMocking() {
+        Car car = spy(new Car());
+        car.setEngine(new Engine());
 
-        Assert.assertEquals(0, car.getEngine().getCylinderCount());
+        Assert.assertEquals(-1, car.getEngine().getCylinderCount());
     }
 
     @Test
     public void recursiveAssertion() {
-        Car car = mock(Car.class);
+        Car car = spy(new Car());
+        car.setEngine(new Engine());
 
         car.getEngine().getCylinderCount();
 
@@ -190,8 +195,8 @@ public class BaldrTest {
 
     @Test
     public void recursiveInvalidAssertion() {
-        Car car = mock(Car.class);
-
+        Car car = spy(new Car());
+        car.setEngine(new Engine());
         car.getEngine();
 
         try {
@@ -199,29 +204,84 @@ public class BaldrTest {
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Engine.getCylinderCount() invoked on mock", e.getMessage());
-
         }
     }
 
     @Test
     public void recursiveInvalidInitialCallAssertion() {
-        Car car = mock(Car.class);
+    Car car = spy(new Car());
 
-        try {
-            assertCalled(car, c-> c.getEngine().getCylinderCount());
-            Assert.fail();
-        } catch (MockVerificationException e) {
-            assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
-        }
-
+    try {
+        assertCalled(car, c-> c.getEngine().getCylinderCount());
+        Assert.fail();
+    } catch (MockVerificationException e) {
+        assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
     }
+
+}
 
     @Test
     public void classWithConstructor() {
-        ClassWithConstructor obj = mock(ClassWithConstructor.class);
+        MyService service = mock(MyService.class);
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
         obj.callService();;
 
-        assertCalled(obj, c-> c.callService());
+        assertCalled(obj, ClassWithConstructor::callService);
+        assertCalled(service, MyService::serve);
+    }
+
+    @Test
+    public void recursiveVerificationOfSpy() {
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(new MyServiceImpl()));
+        obj.getService().serve();
+
+        assertCalled(obj, c -> c.getService().serve());
+    }
+
+    @Test
+    public void failingRecursiveVerificationOfSpy() {
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(new MyServiceImpl()));
+        obj.getService();
+
+        try {
+            assertCalled(obj, c -> c.getService().serve());
+            fail();
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of MyServiceImpl.serve() invoked on mock", e.getMessage());
+        }
+    }
+
+
+    @Test
+    public void recursiveVerificationOfMockedDependency() {
+        MyService service = mock(MyService.class);
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
+        obj.getService().serve();
+
+        assertCalled(obj, c -> c.getService().serve());
+    }
+
+    @Test
+    public void nonRecursiveVerificationOfMockOnSpiedInstance() {
+        MyService service = mock(MyService.class);
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
+        obj.callService();
+
+        assertCalled(service, MyService::serve);
+    }
+
+    @Test
+    public void failingRecursiveVerificationOfMockedDependency() {
+        MyService service = mock(MyService.class);
+        ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
+        obj.getService();
+
+        try {
+            assertCalled(obj, c -> c.getService().serve());
+            fail();
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Object.serve() invoked on mock", e.getMessage());
+        }
     }
 
     @Test

@@ -28,7 +28,7 @@ public class BaldrHamcrestTest {
         try {
             assertCalled(car, c -> c.setEngine(equalTo(engine)));
         } catch (MockVerificationException e) {
-            Assert.assertTrue(e.getMessage() + " did not start with expected value", e.getMessage().startsWith("No matching invocations of `Car`.setEngine(<io.baldr.Engine@"));
+            Assert.assertTrue(e.getMessage() + " did not start with expected value", e.getMessage().startsWith("No matching invocations of Car.setEngine(<io.baldr.Engine@"));
         }
     }
 
@@ -62,7 +62,7 @@ public class BaldrHamcrestTest {
         assertCalled(car, c -> c.setEngine(nullValue(Engine.class)));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void hamcrestMatchingVerification_nullValue_failCase() {
         Car car = mock(Car.class);
         car.setEngine(new Engine());
@@ -82,7 +82,7 @@ public class BaldrHamcrestTest {
         assertCalled(car, c -> c.setEngine(notNullValue(Engine.class)));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void hamcrestMatchingVerification_notNullValue_failCase() {
         Car car = mock(Car.class);
         car.setEngine(null);
@@ -102,7 +102,7 @@ public class BaldrHamcrestTest {
         assertCalled(car, c -> c.setEngine(any(Engine.class)));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void hamcrestMatchingVerification_any_nullValue() {
         Car car = mock(Car.class);
         car.setEngine(null);

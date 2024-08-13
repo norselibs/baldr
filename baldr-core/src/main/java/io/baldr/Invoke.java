@@ -16,13 +16,14 @@ public class Invoke implements InvocationMode {
     }
 
     @Override
-    public Optional<Object> finish(MockInvocation invocation) {
+    public InvocationResult<Object> finish(MockInvocation invocation) {
         Optional<MockInvocation> stub = invocation.getMockShadow().getStubs().stream().filter(s -> s.matches(invocation)).findFirst();
         if (stub.isPresent()) {
-            return Optional.ofNullable(stub.get().popReturnValue());
-        } else {
-            return Optional.empty();
+            InvocationResult poppedValue = stub.get().popReturnValue();
+            if (poppedValue.isPresent()) {
+                return poppedValue;
+            }
         }
-
+        return InvocationResult.empty();
     }
 }

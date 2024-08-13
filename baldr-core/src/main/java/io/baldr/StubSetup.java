@@ -17,9 +17,9 @@ public class StubSetup implements InvocationMode {
     }
 
     @Override
-    public Optional<Object> finish(MockInvocation invocation) {
+    public InvocationResult<Object> finish(MockInvocation invocation) {
         mockShadow.addStub(invocation);
 
-        return Optional.empty();
+        return InvocationResult.empty();
     }
 }
