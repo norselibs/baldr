@@ -5,35 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Initial support for spies, including recursive ones">
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockWriterBase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/PausedAssert.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/SpiedObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/SpyWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/TestClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrSpyTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/ClassWithConstructor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/ClassWithSillyConstrcutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/MyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/MyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Baldr.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Baldr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationModeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/InvocationModeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Invoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Invoke.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Matchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/Matchers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockInvocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockInvocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockShadow.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockShadow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/MockWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/StubSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/StubSetup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/VerificationSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/main/java/io/baldr/VerificationSetup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrHamcrestTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrHamcrestTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/BaldrTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/src/test/java/io/baldr/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/baldr-core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/baldr-junit/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-junit/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -347,7 +321,7 @@
       <workItem from="1681122571676" duration="2169000" />
       <workItem from="1720408847027" duration="2688000" />
       <workItem from="1723194342050" duration="3867000" />
-      <workItem from="1723263363340" duration="36952000" />
+      <workItem from="1723263363340" duration="37169000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -462,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723350741730</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Initial support for spies, including recursive ones">
+      <option name="closed" value="true" />
+      <created>1723526953171</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723526953171</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -485,7 +467,8 @@
     <MESSAGE value="More matchers" />
     <MESSAGE value="Even more matchers" />
     <MESSAGE value="initial junit annotations support" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial junit annotations support" />
+    <MESSAGE value="Initial support for spies, including recursive ones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial support for spies, including recursive ones" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
