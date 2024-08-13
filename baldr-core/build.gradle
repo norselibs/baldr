@@ -1,14 +1,6 @@
-plugins {
-    id 'java'
-}
 
 group = 'org.example'
 version = '0.1-SNAPSHOT'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
 
 dependencies {
 
@@ -17,7 +9,6 @@ dependencies {
     testImplementation("junit:junit:4.12")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
 
-    implementation 'io.ran:ran-core:0.0.1-187'
     implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
     implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'
     implementation 'cglib:cglib:3.3.0'

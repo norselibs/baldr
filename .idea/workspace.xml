@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Initial support for spies, including recursive ones">
+    <list default="true" id="ef7c9aaa-3b2a-4097-93a2-905185550f2b" name="Changes" comment="Fixed ran refs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/baldr-core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-core/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/baldr-junit/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/baldr-junit/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +322,7 @@
       <workItem from="1681122571676" duration="2169000" />
       <workItem from="1720408847027" duration="2688000" />
       <workItem from="1723194342050" duration="3867000" />
-      <workItem from="1723263363340" duration="37169000" />
+      <workItem from="1723263363340" duration="37535000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1680242577257</created>
@@ -444,7 +445,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723526953171</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Fixed ran refs">
+      <option name="closed" value="true" />
+      <created>1723527107292</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723527107292</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -468,7 +477,8 @@
     <MESSAGE value="Even more matchers" />
     <MESSAGE value="initial junit annotations support" />
     <MESSAGE value="Initial support for spies, including recursive ones" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial support for spies, including recursive ones" />
+    <MESSAGE value="Fixed ran refs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed ran refs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

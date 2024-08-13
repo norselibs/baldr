@@ -1,50 +1,51 @@
-plugins {
-    id 'java'
-    id 'maven-publish'
-}
+subprojects {
 
-group 'io.norselibs'
-version '0.1-SNAPSHOT'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
+    group 'io.norselibs'
+    version '0.1-SNAPSHOT'
+
     repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/norselibs/ran")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_CI_ACTOR")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_CI_TOKEN")
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/norselibs/ran")
+                credentials {
+                    username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_CI_ACTOR")
+                    password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_CI_TOKEN")
+                }
             }
         }
+        mavenLocal()
+        mavenCentral()
     }
-}
 
-dependencies {
-    testImplementation 'junit:junit:4.13.2'
-    implementation 'io.ran:ran-core:0.0.1-187'
-    implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
-    implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'
-    implementation 'cglib:cglib:3.3.0'
-}
-
+    dependencies {
+        testImplementation 'junit:junit:4.13.2'
+        implementation 'io.ran:ran-core:0.0.1-187'
+        implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
+        implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'
+        implementation 'cglib:cglib:3.3.0'
+    }
 
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/norselibs/baldr")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/norselibs/baldr")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
+        publications {
+            gpr(MavenPublication) {
+                from(components.java)
+            }
         }
     }
 }
