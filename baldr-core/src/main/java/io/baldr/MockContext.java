@@ -120,10 +120,6 @@ public class MockContext {
     public MockVerificationImpl<?> getCurrentVerification() {
         return currentVerification;
     }
-//
-//    public MockContext getPrimitiveMatcher(MockInvocationParameter matcherParameter) {
-//        getPrimitiveMatcher()
-//    }
 
     private class RegisteredMatcher {
         private String id;

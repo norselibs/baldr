@@ -226,7 +226,7 @@ public class BaldrTest {
 
     @Test
     public void classWithSillyConstructor() {
-        ClassWithSillyConstrcutor obj = mock(ClassWithSillyConstrcutor.class);
+        ClassWithSillyConstructor obj = mock(ClassWithSillyConstructor.class);
 
         assertEquals(0,obj.getI());
         assertEquals(null, obj.getIntegerBoxed());
@@ -287,6 +287,35 @@ public class BaldrTest {
             Assert.fail();
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage().contains("was not expected to be called but was"));
+        }
+    }
+
+    @Test
+    public void interfaceMocking() {
+        MyService svc = mock(MyService.class);
+        svc.serve();
+        assertCalled(svc, MyService::serve);
+    }
+
+    @Test
+    public void interfaceMockingNegative() {
+        MyService svc = mock(MyService.class);
+        try {
+            assertCalled(svc, MyService::serve);
+            Assert.fail();
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage().contains("No matching invocations"));
+        }
+    }
+
+    @Test
+    public void whenOnNonMockThrows() {
+        Car car = new Car();
+        try {
+            when(car, Car::getCarName);
+            Assert.fail();
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("must be a mock"));
         }
     }
 }

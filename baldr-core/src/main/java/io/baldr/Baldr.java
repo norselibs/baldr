@@ -5,11 +5,8 @@ import io.ran.AutoMapperClassLoader;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.util.CheckClassAdapter;
 
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -36,14 +33,8 @@ public class Baldr {
             MockedObject<T> mockedObject = (MockedObject<T>) mocks.computeIfAbsent(tClass.getName(), c -> {
 
                 try {
-//                    Path path = Paths.get("./generated/" + tClass.getSimpleName() + "$Baldr$Mock.class");
-
                     MockWriter visitor = new MockWriter(tClass.getSimpleName(), tClass);
                     byte[] bytes = visitor.toByteArray();
-//                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
-//                        outputStream.write(bytes);
-//                    }
-
                     CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
                     return classLoader.define(visitor.getName(), bytes);
                 } catch (Exception e) {
@@ -79,14 +70,8 @@ public class Baldr {
             SpiedObject<T> mockedObject = (SpiedObject<T>) spies.computeIfAbsent(tClass.getName(), c -> {
 
                 try {
-//                    Path path = Paths.get("./generated/" + tClass.getSimpleName() + "$Baldr$Spy.class");
-
                     SpyWriter visitor = new SpyWriter(tClass.getSimpleName(), tClass);
                     byte[] bytes = visitor.toByteArray();
-//                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
-//                        outputStream.write(bytes);
-//                    }
-
                     CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
                     return classLoader.define(visitor.getName(), bytes);
                 } catch (Exception e) {

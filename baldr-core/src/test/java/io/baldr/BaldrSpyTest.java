@@ -286,7 +286,7 @@ public class BaldrSpyTest {
 
     @Test
     public void classWithSillyConstructor() {
-        ClassWithSillyConstrcutor obj = mock(ClassWithSillyConstrcutor.class);
+        ClassWithSillyConstructor obj = mock(ClassWithSillyConstructor.class);
 
         assertEquals(0,obj.getI());
         assertEquals(null, obj.getIntegerBoxed());

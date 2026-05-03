@@ -61,20 +61,6 @@ public class Matchers {
                     return (T)Boolean.valueOf("true");
                 }
                 return (T) t;
-//
-//            Queue<Boolean> possibleValues = new ArrayDeque<>(Arrays.asList(false, true));
-//            Boolean id = null;
-//            for (Boolean pv : possibleValues) {
-//                if (!MockContext.get().hasMatcher(pv.getClass(), pv.toString())) {
-//                    id = pv;
-//                    break;
-//                }
-//            }
-//            if (id != null) {
-//                MockContext.get().registerMatcher(id.toString(), tClass, supplier.get());
-//                return (T) id;
-//            }
-//            return t;
         }
         if (isNumber(tClass)) {
             try {

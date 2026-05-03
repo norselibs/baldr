@@ -1,6 +1,6 @@
 package io.baldr;
 
-public class ClassWithSillyConstrcutor {
+public class ClassWithSillyConstructor {
 	private final int i;
 	private final Integer integerBoxed;
 	private final short s;
@@ -12,7 +12,7 @@ public class ClassWithSillyConstrcutor {
 	private final double d;
 	private final Double doubleBoxed;
 
-	public ClassWithSillyConstrcutor(int i, Integer integerBoxed, short s, Short shortBoxed, long l, Long longBoxed, float f, Float floatBoxed, double d, Double doubleBoxed) {
+	public ClassWithSillyConstructor(int i, Integer integerBoxed, short s, Short shortBoxed, long l, Long longBoxed, float f, Float floatBoxed, double d, Double doubleBoxed) {
 
 		this.i = i;
 		this.integerBoxed = integerBoxed;

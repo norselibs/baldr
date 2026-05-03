@@ -10,10 +10,18 @@ public class AnnotationsTestJunit {
 	@Mock
 	private Boat boat;
 
+	@Spy
+	private Boat boatSpy = new Boat();
+
 	@Test
 	public void mockAnnotation() {
 		boat.start();
-
 		assertCalled(boat, Boat::start);
+	}
+
+	@Test
+	public void spyAnnotation() {
+		boatSpy.start();
+		assertCalled(boatSpy, Boat::start);
 	}
 }

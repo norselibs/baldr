@@ -11,9 +11,7 @@ public class VerificationSetup implements InvocationMode {
     }
 
     @Override
-    public <T> void build(MockInvocation<T> invocation) {
-        int a = 0;
-    }
+    public <T> void build(MockInvocation<T> invocation) {}
 
     @Override
     public InvocationResult<Object> finish(MockInvocation invocation) {
