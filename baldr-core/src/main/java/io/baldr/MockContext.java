@@ -4,14 +4,18 @@ import org.hamcrest.Matcher;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MockContext {
-    private static InheritableThreadLocal<MockContext> context =  new InheritableThreadLocal<>();
-    static {
-        context.set(new MockContext());
-    }
+    private static final InheritableThreadLocal<MockContext> context = new InheritableThreadLocal<>() {
+        @Override
+        protected MockContext initialValue() {
+            return new MockContext();
+        }
+    };
 
 
+    private final AtomicInteger invocationOrder = new AtomicInteger(0);
     private InvocationModeEnum invocationMode = InvocationModeEnum.Invoke;
     private ConcurrentLinkedDeque<MockInvocation<?>> invocations = new ConcurrentLinkedDeque<>();
     private ConcurrentLinkedDeque<RegisteredMatcher> matchers = new ConcurrentLinkedDeque<>();
@@ -19,6 +23,10 @@ public class MockContext {
 
     public static MockContext get() {
         return context.get();
+    }
+
+    public int incrementOrder() {
+        return invocationOrder.incrementAndGet();
     }
 
     public <T> void addInvocation(MockInvocation<T> invocation) {
@@ -124,7 +132,14 @@ public class MockContext {
         }
 
         public boolean matches(MockInvocationParameter matcherParameter) {
-            return false;
+            if (!type.equals(matcherParameter.getType())) {
+                return false;
+            }
+            Object value = matcherParameter.getValue();
+            if (value == null) {
+                return id.equals("null");
+            }
+            return id.equals(value.toString());
         }
     }
 }

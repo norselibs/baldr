@@ -10,16 +10,16 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 @SuppressWarnings("rawtypes")
 public class Baldr {
-    private static final Map<String, Class> mocks = new HashMap<>();
-    private static final Map<String, Class> spies = new HashMap<>();
-    private static final Map<Integer, Object> spyInstances = new HashMap<>();
+    private static final Map<String, Class> mocks = new ConcurrentHashMap<>();
+    private static final Map<String, Class> spies = new ConcurrentHashMap<>();
+    private static final Map<Integer, Object> spyInstances = new ConcurrentHashMap<>();
 
 
     private static final AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
@@ -69,8 +69,9 @@ public class Baldr {
                 return t;
             }
             int hc = System.identityHashCode(t);
-            if (spyInstances.containsKey(hc)) {
-                return (T) spyInstances.get(hc);
+            Object existing = spyInstances.get(hc);
+            if (existing != null) {
+                return (T) existing;
             }
             Class<T> tClass = (Class<T>) t.getClass();
 

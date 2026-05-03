@@ -15,7 +15,8 @@ public class Stub<T, R> {
 
     }
 
-    public void thenReturn(R returnValue) {
+    public Stub<T, R> thenReturn(R returnValue) {
         stubInvocation.addReturnValue(returnValue);
+        return this;
     }
 }

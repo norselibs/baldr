@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.baldr.Baldr.mock;
 
@@ -17,7 +16,6 @@ public class MockShadow {
     ConcurrentHashMap<MockInvocation, MockedObject> mockedReturns = new ConcurrentHashMap<>();
 
     private MockInvocation currentInvocation;
-    private static final AtomicInteger invocationOrder = new AtomicInteger(0);
     private Object activeMock = null;
     private MockedObject mockObject;
 
@@ -85,7 +83,7 @@ public class MockShadow {
     }
 
     public int incrementOrder() {
-        return invocationOrder.incrementAndGet();
+        return MockContext.get().incrementOrder();
     }
 
     public <T> void addInvocation(MockInvocation<T> invocation) {

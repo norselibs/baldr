@@ -6,6 +6,7 @@ dependencies {
     implementation platform('org.junit:junit-bom:5.9.1')
     implementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation project(':baldr-core')
     implementation group: 'org.ow2.asm', name: 'asm', version: '9.2'
     implementation group: 'org.ow2.asm', name: 'asm-util', version: '9.2'

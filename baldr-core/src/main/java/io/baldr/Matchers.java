@@ -12,11 +12,8 @@ import org.hamcrest.core.IsSame;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.util.CheckClassAdapter;
 
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
@@ -34,14 +31,8 @@ public class Matchers {
             return (T)matchers.computeIfAbsent(tClass.getName(), c -> {
 
                 try {
-                    Path path = Paths.get("/tmp/" + tClass.getSimpleName() + "$Ran$Matcher.class");
-
                     MatcherWriter visitor = new MatcherWriter(tClass.getSimpleName(), tClass);
                     byte[] bytes = visitor.toByteArray();
-                    try (FileOutputStream outputStream = new FileOutputStream(path.toFile())) {
-                        outputStream.write(bytes);
-                    }
-
                     CheckClassAdapter.verify(new ClassReader(bytes), false, new PrintWriter(System.out));
                     return classLoader.define(visitor.getName(), bytes);
                 } catch (Exception e) {
