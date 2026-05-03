@@ -19,7 +19,27 @@ public class MockInvocation<T> {
     private final String methodName;
     private final List<MockInvocationParameter> parameters = new ArrayList<>();
     private int order;
-    private final ConcurrentLinkedQueue<Object> returnValues = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<StubAction> stubActions = new ConcurrentLinkedQueue<>();
+
+    private static class StubAction {
+        final Object returnValue;
+        final Throwable throwable;
+
+        private StubAction(Object returnValue, Throwable throwable) {
+            this.returnValue = returnValue;
+            this.throwable = throwable;
+        }
+
+        static StubAction returning(Object value) { return new StubAction(value, null); }
+        static StubAction throwing(Throwable t)   { return new StubAction(null, t); }
+
+        boolean isThrow() { return throwable != null; }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T extends Throwable> void sneakyThrow(Throwable t) throws T {
+        throw (T) t;
+    }
 
     public MockInvocation(MockShadow mockShadow, T on, String methodName) {
         this.mockShadow = mockShadow;
@@ -167,16 +187,26 @@ public class MockInvocation<T> {
     }
 
     public <R> void addReturnValue(R returnValue) {
-        returnValues.add(returnValue);
+        stubActions.add(StubAction.returning(returnValue));
+    }
+
+    public void addThrowable(Throwable throwable) {
+        stubActions.add(StubAction.throwing(throwable));
     }
 
     public InvocationResult<Object> popReturnValue() {
-        if (returnValues.size() == 1) {
-            return InvocationResult.of(returnValues.peek());
-        } else if (!returnValues.isEmpty()) {
-            return InvocationResult.of(returnValues.poll());
+        StubAction action;
+        if (stubActions.size() == 1) {
+            action = stubActions.peek();
+        } else if (!stubActions.isEmpty()) {
+            action = stubActions.poll();
+        } else {
+            return InvocationResult.empty();
         }
-        return InvocationResult.empty();
+        if (action.isThrow()) {
+            sneakyThrow(action.throwable);
+        }
+        return InvocationResult.of(action.returnValue);
     }
 
     public Method getMethod() {

@@ -309,6 +309,43 @@ public class BaldrTest {
     }
 
     @Test
+    public void thenThrowOnReturnMethod() {
+        Car car = mock(Car.class);
+        when(car, Car::getCarName).thenThrow(new IllegalStateException("boom"));
+        try {
+            car.getCarName();
+            Assert.fail();
+        } catch (IllegalStateException e) {
+            assertEquals("boom", e.getMessage());
+        }
+    }
+
+    @Test
+    public void thenThrowOnVoidMethod() {
+        Car car = mock(Car.class);
+        whenVoid(car, Car::openDoor).thenThrow(new IllegalStateException("door stuck"));
+        try {
+            car.openDoor();
+            Assert.fail();
+        } catch (IllegalStateException e) {
+            assertEquals("door stuck", e.getMessage());
+        }
+    }
+
+    @Test
+    public void thenReturnThenThrow() {
+        Car car = mock(Car.class);
+        when(car, Car::getCarName).thenReturn("Toyota").thenThrow(new IllegalStateException("no more"));
+        assertEquals("Toyota", car.getCarName());
+        try {
+            car.getCarName();
+            Assert.fail();
+        } catch (IllegalStateException e) {
+            assertEquals("no more", e.getMessage());
+        }
+    }
+
+    @Test
     public void whenOnNonMockThrows() {
         Car car = new Car();
         try {

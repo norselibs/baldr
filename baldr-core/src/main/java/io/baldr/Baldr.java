@@ -119,4 +119,13 @@ public class Baldr {
             MockContext.get().exitStubbing();
         }
     }
+
+    public static <T> Stub<T, Void> whenVoid(T t, Consumer<T> consumer) {
+        MockContext.get().enterStubbing();
+        try {
+            return new Stub<>(t, consumer);
+        } finally {
+            MockContext.get().exitStubbing();
+        }
+    }
 }
