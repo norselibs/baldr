@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -19,7 +21,7 @@ import java.util.function.Function;
 public class Baldr {
     private static final Map<String, Class> mocks = new ConcurrentHashMap<>();
     private static final Map<String, Class> spies = new ConcurrentHashMap<>();
-    private static final Map<Integer, Object> spyInstances = new ConcurrentHashMap<>();
+    private static final Map<Object, Object> spyInstances = Collections.synchronizedMap(new IdentityHashMap<>());
 
 
     private static final AutoMapperClassLoader classLoader = new AutoMapperClassLoader(AutoMapper.class.getClassLoader());
@@ -68,8 +70,7 @@ public class Baldr {
             if (t instanceof MockedObject<?>) {
                 return t;
             }
-            int hc = System.identityHashCode(t);
-            Object existing = spyInstances.get(hc);
+            Object existing = spyInstances.get(t);
             if (existing != null) {
                 return (T) existing;
             }
@@ -95,7 +96,7 @@ public class Baldr {
              mockedObject.$setName(name);
 
             mockedObject.$setInstance(t);
-            spyInstances.put(hc, mockedObject);
+            spyInstances.put(t, mockedObject);
             return (T) mockedObject;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -108,6 +109,18 @@ public class Baldr {
         MockContext.get().enterAssert();
         try {
             return new MockVerificationImpl<>(t, consumer, null);
+        } finally {
+            MockContext.get().exitAssert();
+        }
+    }
+
+    public static <T> void assertNeverCalled(T t, Consumer<T> consumer) {
+        MockContext.get().enterNeverAssert();
+        try {
+            if (!(t instanceof MockedObject)) {
+                throw new RuntimeException(t.getClass().getName() + " must be a mock");
+            }
+            consumer.accept(t);
         } finally {
             MockContext.get().exitAssert();
         }

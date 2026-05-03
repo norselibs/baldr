@@ -237,4 +237,56 @@ public class BaldrTest {
         assertEquals(0.0f,obj.getF(), 0.1);
         assertEquals(null, obj.getFloatBoxed());
     }
+
+    @Test
+    public void timesExact() {
+        Car car = mock(Car.class);
+        car.openDoor();
+        car.openDoor();
+        car.openDoor();
+        assertCalled(car, Car::openDoor).times(3);
+    }
+
+    @Test
+    public void timesTooFew() {
+        Car car = mock(Car.class);
+        car.openDoor();
+        try {
+            assertCalled(car, Car::openDoor).times(3);
+            Assert.fail();
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage().contains("expected to be called 3 times but was only called"));
+        }
+    }
+
+    @Test
+    public void timesTooMany() {
+        Car car = mock(Car.class);
+        car.openDoor();
+        car.openDoor();
+        try {
+            assertCalled(car, Car::openDoor).times(1);
+            Assert.fail();
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage().contains("expected to be called exactly 1 times but was called more"));
+        }
+    }
+
+    @Test
+    public void assertNeverCalledPasses() {
+        Car car = mock(Car.class);
+        assertNeverCalled(car, Car::openDoor);
+    }
+
+    @Test
+    public void assertNeverCalledFails() {
+        Car car = mock(Car.class);
+        car.openDoor();
+        try {
+            assertNeverCalled(car, Car::openDoor);
+            Assert.fail();
+        } catch (MockVerificationException e) {
+            assertTrue(e.getMessage().contains("was not expected to be called but was"));
+        }
+    }
 }

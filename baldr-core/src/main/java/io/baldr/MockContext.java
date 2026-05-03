@@ -44,6 +44,11 @@ public class MockContext {
         invocationMode = InvocationModeEnum.Assert;
     }
 
+    public void enterNeverAssert() {
+        clear();
+        invocationMode = InvocationModeEnum.NeverAssert;
+    }
+
     public void enterStubbing() {
         clear();
         invocationMode = InvocationModeEnum.Stubbing;
@@ -112,7 +117,7 @@ public class MockContext {
         this.currentVerification = currentVerification;
     }
 
-    public MockVerification<?> getCurrentVerification() {
+    public MockVerificationImpl<?> getCurrentVerification() {
         return currentVerification;
     }
 //

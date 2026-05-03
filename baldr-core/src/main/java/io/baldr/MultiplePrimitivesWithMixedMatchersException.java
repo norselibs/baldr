@@ -1,7 +1,7 @@
 package io.baldr;
 
-public class MultiplePrimitivesWithMixedMatchersException extends RuntimeException {
-    public MultiplePrimitivesWithMixedMatchersException(String s) {
-        super(s);
+public class MultiplePrimitivesWithMixedMatchersException extends AssertionError {
+    public MultiplePrimitivesWithMixedMatchersException(String message) {
+        super(message);
     }
 }
