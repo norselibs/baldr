@@ -15,7 +15,7 @@ public class BaldrSpyTest {
     public void simpleVerification() {
         Car car = spy(new Car());
         car.openDoor();
-        assertCalled(car, Car::openDoor);
+        on(car).assertCalled(Car::openDoor);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class BaldrSpyTest {
         Car car = spy(new Car());
 
         try {
-            assertCalled(car, Car::openDoor);
+            on(car).assertCalled(Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.openDoor() invoked on mock", e.getMessage());
@@ -37,8 +37,8 @@ public class BaldrSpyTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor);
-            assertCalled(car2, Car::openDoor);
+            on(car).assertCalled(Car::openDoor);
+            on(car2).assertCalled(Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of `car2`.openDoor() invoked on mock", e.getMessage());
@@ -50,7 +50,7 @@ public class BaldrSpyTest {
         Car car = spy(new Car());
         car.openDoor();
         car.closeDoor();
-        assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+        on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class BaldrSpyTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("Car.openDoor() was expected to be called before Car.closeDoor()", e.getMessage());
@@ -77,7 +77,7 @@ public class BaldrSpyTest {
         car2.openDoor();
         car3.openDoor();
 
-        assertCalled(car, Car::openDoor)
+        on(car).assertCalled(Car::openDoor)
                 .thenCalled(car2, Car::openDoor)
                 .thenCalled(car3, Car::openDoor);
     }
@@ -90,7 +90,7 @@ public class BaldrSpyTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(car2, Car::openDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(car2, Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("Car.openDoor() was expected to be called before Car.openDoor()", e.getMessage());
@@ -104,8 +104,8 @@ public class BaldrSpyTest {
         car2.openDoor();
         car.openDoor();
 
-        assertCalled(car, Car::openDoor);
-        assertCalled(car2, Car::openDoor);
+        on(car).assertCalled(Car::openDoor);
+        on(car2).assertCalled(Car::openDoor);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class BaldrSpyTest {
         car.closeDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.openDoor() invoked on mock", e.getMessage());
@@ -127,7 +127,7 @@ public class BaldrSpyTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.closeDoor() invoked on mock", e.getMessage());
@@ -139,7 +139,7 @@ public class BaldrSpyTest {
         Car car = spy(new Car());
         car.setCarName("Toyota");
 
-        assertCalled(car, c -> c.setCarName("Toyota"));
+        on(car).assertCalled(c -> c.setCarName("Toyota"));
     }
 
 
@@ -149,7 +149,7 @@ public class BaldrSpyTest {
         car.setCarName("Toyota");
 
         try {
-            assertCalled(car, c -> c.setCarName("Hyundai"));
+            on(car).assertCalled(c -> c.setCarName("Hyundai"));
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.setCarName(\"Hyundai\") invoked on mock", e.getMessage());
@@ -159,7 +159,7 @@ public class BaldrSpyTest {
     @Test
     public void simpleStubbing() {
         Car car = spy(new Car());
-        when(car, Car::getCarName).thenReturn("Toyota");
+        on(car).when(c -> c.getCarName()).thenReturn("Toyota");
 
         Assert.assertEquals("Toyota", car.getCarName());
     }
@@ -222,10 +222,10 @@ public class BaldrSpyTest {
     public void classWithConstructor() {
         MyService service = mock(MyService.class);
         ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
-        obj.callService();;
+        obj.callService();
 
-        assertCalled(obj, ClassWithConstructor::callService);
-        assertCalled(service, MyService::serve);
+        on(obj).assertCalled(ClassWithConstructor::callService);
+        on(service).assertCalled(MyService::serve);
     }
 
     @Test
@@ -233,7 +233,7 @@ public class BaldrSpyTest {
         ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(new MyServiceImpl()));
         obj.getService().serve();
 
-        assertCalled(obj, c -> c.getService().serve());
+        on(obj).assertCalled(c -> c.getService().serve());
     }
 
     @Test
@@ -242,7 +242,7 @@ public class BaldrSpyTest {
         obj.getService();
 
         try {
-            assertCalled(obj, c -> c.getService().serve());
+            on(obj).assertCalled(c -> c.getService().serve());
             fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of MyServiceImpl.serve() invoked on mock", e.getMessage());
@@ -256,7 +256,7 @@ public class BaldrSpyTest {
         ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
         obj.getService().serve();
 
-        assertCalled(obj, c -> c.getService().serve());
+        on(obj).assertCalled(c -> c.getService().serve());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class BaldrSpyTest {
         ClassWithConstructor obj = Baldr.spy(new ClassWithConstructor(service));
         obj.callService();
 
-        assertCalled(service, MyService::serve);
+        on(service).assertCalled(MyService::serve);
     }
 
     @Test
@@ -275,7 +275,7 @@ public class BaldrSpyTest {
         obj.getService();
 
         try {
-            assertCalled(obj, c -> c.getService().serve());
+            on(obj).assertCalled(c -> c.getService().serve());
             fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Object.serve() invoked on mock", e.getMessage());

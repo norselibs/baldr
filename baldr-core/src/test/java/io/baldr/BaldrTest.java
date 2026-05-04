@@ -14,7 +14,7 @@ public class BaldrTest {
     public void simpleVerification() {
         Car car = mock(Car.class);
         car.openDoor();
-        assertCalled(car, Car::openDoor);
+        on(car).assertCalled(Car::openDoor);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
 
         try {
-            assertCalled(car, Car::openDoor);
+            on(car).assertCalled(Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.openDoor() invoked on mock", e.getMessage());
@@ -36,8 +36,8 @@ public class BaldrTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor);
-            assertCalled(car2, Car::openDoor);
+            on(car).assertCalled(Car::openDoor);
+            on(car2).assertCalled(Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of `car2`.openDoor() invoked on mock", e.getMessage());
@@ -49,7 +49,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.openDoor();
         car.closeDoor();
-        assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+        on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class BaldrTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("Car.openDoor() was expected to be called before Car.closeDoor()", e.getMessage());
@@ -76,7 +76,7 @@ public class BaldrTest {
         car2.openDoor();
         car3.openDoor();
 
-        assertCalled(car, Car::openDoor)
+        on(car).assertCalled(Car::openDoor)
                 .thenCalled(car2, Car::openDoor)
                 .thenCalled(car3, Car::openDoor);
     }
@@ -89,7 +89,7 @@ public class BaldrTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(car2, Car::openDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(car2, Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("Car.openDoor() was expected to be called before Car.openDoor()", e.getMessage());
@@ -103,8 +103,8 @@ public class BaldrTest {
         car2.openDoor();
         car.openDoor();
 
-        assertCalled(car, Car::openDoor);
-        assertCalled(car2, Car::openDoor);
+        on(car).assertCalled(Car::openDoor);
+        on(car2).assertCalled(Car::openDoor);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class BaldrTest {
         car.closeDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.openDoor() invoked on mock", e.getMessage());
@@ -126,7 +126,7 @@ public class BaldrTest {
         car.openDoor();
 
         try {
-            assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+            on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.closeDoor() invoked on mock", e.getMessage());
@@ -138,7 +138,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.setCarName("Toyota");
 
-        assertCalled(car, c -> c.setCarName("Toyota"));
+        on(car).assertCalled(c -> c.setCarName("Toyota"));
     }
 
 
@@ -148,7 +148,7 @@ public class BaldrTest {
         car.setCarName("Toyota");
 
         try {
-            assertCalled(car, c -> c.setCarName("Hyundai"));
+            on(car).assertCalled(c -> c.setCarName("Hyundai"));
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.setCarName(\"Hyundai\") invoked on mock", e.getMessage());
@@ -158,7 +158,7 @@ public class BaldrTest {
     @Test
     public void simpleStubbing() {
         Car car = mock(Car.class);
-        when(car, Car::getCarName).thenReturn("Toyota");
+        on(car).when(c -> c.getCarName()).thenReturn("Toyota");
 
         Assert.assertEquals("Toyota", car.getCarName());
     }
@@ -219,9 +219,9 @@ public class BaldrTest {
     @Test
     public void classWithConstructor() {
         ClassWithConstructor obj = mock(ClassWithConstructor.class);
-        obj.callService();;
+        obj.callService();
 
-        assertCalled(obj, c-> c.callService());
+        on(obj).assertCalled(c -> c.callService());
     }
 
     @Test
@@ -244,7 +244,7 @@ public class BaldrTest {
         car.openDoor();
         car.openDoor();
         car.openDoor();
-        assertCalled(car, Car::openDoor).times(3);
+        on(car).assertCalled(Car::openDoor).times(3);
     }
 
     @Test
@@ -252,7 +252,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.openDoor();
         try {
-            assertCalled(car, Car::openDoor).times(3);
+            on(car).assertCalled(Car::openDoor).times(3);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage().contains("expected to be called 3 times but was only called"));
@@ -265,7 +265,7 @@ public class BaldrTest {
         car.openDoor();
         car.openDoor();
         try {
-            assertCalled(car, Car::openDoor).times(1);
+            on(car).assertCalled(Car::openDoor).times(1);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage().contains("expected to be called exactly 1 times but was called more"));
@@ -275,7 +275,7 @@ public class BaldrTest {
     @Test
     public void assertNeverCalledPasses() {
         Car car = mock(Car.class);
-        assertNeverCalled(car, Car::openDoor);
+        on(car).assertNeverCalled(Car::openDoor);
     }
 
     @Test
@@ -283,7 +283,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
         car.openDoor();
         try {
-            assertNeverCalled(car, Car::openDoor);
+            on(car).assertNeverCalled(Car::openDoor);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage().contains("was not expected to be called but was"));
@@ -294,14 +294,14 @@ public class BaldrTest {
     public void interfaceMocking() {
         MyService svc = mock(MyService.class);
         svc.serve();
-        assertCalled(svc, MyService::serve);
+        on(svc).assertCalled(MyService::serve);
     }
 
     @Test
     public void interfaceMockingNegative() {
         MyService svc = mock(MyService.class);
         try {
-            assertCalled(svc, MyService::serve);
+            on(svc).assertCalled(MyService::serve);
             Assert.fail();
         } catch (MockVerificationException e) {
             assertTrue(e.getMessage().contains("No matching invocations"));
@@ -311,7 +311,7 @@ public class BaldrTest {
     @Test
     public void thenThrowOnReturnMethod() {
         Car car = mock(Car.class);
-        when(car, Car::getCarName).thenThrow(new IllegalStateException("boom"));
+        on(car).when(c -> c.getCarName()).thenThrow(new IllegalStateException("boom"));
         try {
             car.getCarName();
             Assert.fail();
@@ -335,7 +335,7 @@ public class BaldrTest {
     @Test
     public void thenReturnThenThrow() {
         Car car = mock(Car.class);
-        when(car, Car::getCarName).thenReturn("Toyota").thenThrow(new IllegalStateException("no more"));
+        on(car).when(c -> c.getCarName()).thenReturn("Toyota").thenThrow(new IllegalStateException("no more"));
         assertEquals("Toyota", car.getCarName());
         try {
             car.getCarName();
@@ -349,7 +349,7 @@ public class BaldrTest {
     public void whenOnNonMockThrows() {
         Car car = new Car();
         try {
-            when(car, Car::getCarName);
+            on(car).when(c -> c.getCarName());
             Assert.fail();
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("must be a mock"));

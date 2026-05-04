@@ -12,7 +12,7 @@ For one, Baldr mocks and spies are recursive in nature.
     car.openDoor();
     
     // Verification
-    assertCalled(car, Car::openDoor);
+    on(car).assertCalled(Car::openDoor);
 ```
 
 Baldr also supports verifying order of invocation, like so:
@@ -26,7 +26,7 @@ Baldr also supports verifying order of invocation, like so:
     car.closeDoor();
 
 	// Verification
-    assertCalled(car, Car::openDoor).thenCalled(Car::closeDoor);
+    on(car).assertCalled(Car::openDoor).thenCalled(Car::closeDoor);
 ```
 
 Unlike most other mock frameworks, Baldr defaults to having methods returning mockable objects return a "recursive mock" automatically:
@@ -34,7 +34,7 @@ Unlike most other mock frameworks, Baldr defaults to having methods returning mo
 ```java
     // Setup
     Car car = mock(Car.class);
-    when(car, c -> c.getEngine().getCylinderCount()).thenReturn(5);
+    on(car).when(c -> c.getEngine().getCylinderCount()).thenReturn(5);
 
     // Execution
     assertEquals(5, car.getEngine().getCylinderCount());
@@ -54,7 +54,7 @@ There is also, at the moment limited, support for hamcrest matchers:
     car.setEngine(engine);
     
     // Verification
-    assertCalled(car, c ->c.setEngine(sameInstance(engine)));
+    on(car).assertCalled(c ->c.setEngine(sameInstance(engine)));
 ```
 Spies of real objects can also be made:
 
@@ -66,7 +66,7 @@ Spies of real objects can also be made:
     car.openDoor();
     
     // Verification
-    assertCalled(car, Car::openDoor);
+    on(car).assertCalled(Car::openDoor);
 ```
 
 As spies are also recursive, we can verify something being called on something which is not initially setup to be a mock
@@ -79,6 +79,6 @@ As spies are also recursive, we can verify something being called on something w
     obj.getService().serve();
 
 	// Verification
-    assertCalled(obj, c -> c.getService().serve());
+    on(obj).assertCalled(c -> c.getService().serve());
 ```
 

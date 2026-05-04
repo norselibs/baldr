@@ -9,6 +9,7 @@ import java.util.function.Function;
 public class Chain<T, R> {
     private final Object root;
     private final List<Function> fns;
+    private MockInvocation cachedStubInv;
 
     Chain(Object root, Function<T, R> fn) {
         this.root = root;
@@ -29,15 +30,20 @@ public class Chain<T, R> {
     }
 
     public Chain<T, R> thenReturn(R value) {
-        MockInvocation lastInv = runStubChain();
-        lastInv.addReturnValue(value);
+        stubInv().addReturnValue(value);
         return this;
     }
 
     public Chain<T, R> thenThrow(Throwable t) {
-        MockInvocation lastInv = runStubChain();
-        lastInv.addThrowable(t);
+        stubInv().addThrowable(t);
         return this;
+    }
+
+    private MockInvocation stubInv() {
+        if (cachedStubInv == null) {
+            cachedStubInv = runStubChain();
+        }
+        return cachedStubInv;
     }
 
     public <N> MockVerification<N> assertCalled(Function<R, N> fn) {

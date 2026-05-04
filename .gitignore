@@ -43,3 +43,4 @@ bin/
 
 baldr-core/generated
 baldr-junit/generated
+.idea
