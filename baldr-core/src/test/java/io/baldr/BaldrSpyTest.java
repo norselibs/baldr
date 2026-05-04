@@ -168,8 +168,7 @@ public class BaldrSpyTest {
     public void recursiveStubbing() {
         Car car = spy(new Car());
         car.setEngine(new Engine());
-        when(car, c -> c.getEngine().getCylinderCount()).thenReturn(5);
-
+        on(car).when(c -> c.getEngine()).then(e -> e.getCylinderCount()).thenReturn(5);
 
         System.out.println(car.getEngine().getClass().getName());
         Assert.assertEquals(5, car.getEngine().getCylinderCount());
@@ -190,7 +189,7 @@ public class BaldrSpyTest {
 
         car.getEngine().getCylinderCount();
 
-        assertCalled(car, c-> c.getEngine().getCylinderCount());
+        on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
     }
 
     @Test
@@ -200,7 +199,7 @@ public class BaldrSpyTest {
         car.getEngine();
 
         try {
-            assertCalled(car, c-> c.getEngine().getCylinderCount());
+            on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Engine.getCylinderCount() invoked on mock", e.getMessage());
@@ -209,16 +208,15 @@ public class BaldrSpyTest {
 
     @Test
     public void recursiveInvalidInitialCallAssertion() {
-    Car car = spy(new Car());
+        Car car = spy(new Car());
 
-    try {
-        assertCalled(car, c-> c.getEngine().getCylinderCount());
-        Assert.fail();
-    } catch (MockVerificationException e) {
-        assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
+        try {
+            on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
+            Assert.fail();
+        } catch (MockVerificationException e) {
+            assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
+        }
     }
-
-}
 
     @Test
     public void classWithConstructor() {

@@ -120,7 +120,11 @@ public class Baldr {
         }
     }
 
-    public static <T> Stub<T, Void> whenVoid(T t, Consumer<T> consumer) {
+    public static <T> On<T> on(T t) {
+        return new On<>(t);
+    }
+
+    public static <T> Stub<T, Void> when(T t, Consumer<T> consumer) {
         MockContext.get().enterStubbing();
         try {
             return new Stub<>(t, consumer);

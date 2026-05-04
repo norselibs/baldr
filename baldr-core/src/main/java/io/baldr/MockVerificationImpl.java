@@ -2,11 +2,12 @@ package io.baldr;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 class MockVerificationImpl<T> implements MockVerification<T> {
     private final Object on;
-    private MockInvocation previous;
+    MockInvocation previous;
     private MockInvocation lastTemplate;
 
     public MockVerificationImpl(T t, Consumer<T> consumer, MockInvocation previous) {
@@ -16,6 +17,13 @@ class MockVerificationImpl<T> implements MockVerification<T> {
             throw new RuntimeException(on.getClass().getName()+" must be a mock");
         }
         called(on, consumer);
+    }
+
+    // Internal constructor for chaining — skips the consumer and MockedObject check
+    // because the chain result may be a primitive wrapper or terminal mock.
+    MockVerificationImpl(T on, MockInvocation previous) {
+        this.on = on;
+        this.previous = previous;
     }
 
     private void called(Object instance, Consumer consumer) {
@@ -39,6 +47,18 @@ class MockVerificationImpl<T> implements MockVerification<T> {
         try {
             MockContext.get().enterAssert();
             return new MockVerificationImpl<>(c, consumer, this.previous);
+        } finally {
+            MockContext.get().exitAssert();
+        }
+    }
+
+    @Override
+    public <N> MockVerification<N> then(Function<T, N> function) {
+        MockContext.get().enterAssert();
+        try {
+            MockContext.get().setCurrentVerificationImpl(this);
+            N returnValue = function.apply((T) on);
+            return new MockVerificationImpl<>(returnValue, previous);
         } finally {
             MockContext.get().exitAssert();
         }

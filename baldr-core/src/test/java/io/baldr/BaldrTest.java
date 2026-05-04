@@ -166,7 +166,7 @@ public class BaldrTest {
     @Test
     public void recursiveStubbing() {
         Car car = mock(Car.class);
-        when(car, c -> c.getEngine().getCylinderCount()).thenReturn(5);
+        on(car).when(c -> c.getEngine()).then(e -> e.getCylinderCount()).thenReturn(5);
 
         Assert.assertEquals(5, car.getEngine().getCylinderCount());
     }
@@ -185,7 +185,7 @@ public class BaldrTest {
 
         car.getEngine().getCylinderCount();
 
-        assertCalled(car, c-> c.getEngine().getCylinderCount());
+        on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class BaldrTest {
         car.getEngine();
 
         try {
-            assertCalled(car, c-> c.getEngine().getCylinderCount());
+            on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Engine.getCylinderCount() invoked on mock", e.getMessage());
@@ -208,7 +208,7 @@ public class BaldrTest {
         Car car = mock(Car.class);
 
         try {
-            assertCalled(car, c-> c.getEngine().getCylinderCount());
+            on(car).when(c -> c.getEngine()).assertCalled(e -> e.getCylinderCount());
             Assert.fail();
         } catch (MockVerificationException e) {
             assertEquals("No matching invocations of Car.getEngine() invoked on mock", e.getMessage());
@@ -323,7 +323,7 @@ public class BaldrTest {
     @Test
     public void thenThrowOnVoidMethod() {
         Car car = mock(Car.class);
-        whenVoid(car, Car::openDoor).thenThrow(new IllegalStateException("door stuck"));
+        when(car, Car::openDoor).thenThrow(new IllegalStateException("door stuck"));
         try {
             car.openDoor();
             Assert.fail();
